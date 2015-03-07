@@ -3,9 +3,48 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:kiltse="clr-namespace:TeaDriven.Kiltse"
              mc:Ignorable="d"
              d:DesignHeight="300"
-             d:DesignWidth="300">
-    <Grid>
-    </Grid>
+             d:DesignWidth="300"
+             x:Name="ArcControl">
+    <Path StrokeThickness="2"
+          Name="Path">
+        <Path.Style>
+            <Style TargetType="Path">
+                <Setter Property="Stroke"
+                        Value="AntiqueWhite" />
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding ElementName=ArcControl, Path=ItemIndex}"
+                                 Value="0">
+                        <Setter Property="Stroke"
+                                Value="Red" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding ElementName=ArcControl, Path=ItemIndex}"
+                                 Value="1">
+                        <Setter Property="Stroke"
+                                Value="Cyan" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Path.Style>
+        <Path.Effect>
+            <DropShadowEffect ShadowDepth="0"
+                              Color="{Binding ElementName=Path, Path=Stroke.Color}"
+                              Opacity="1"
+                              BlurRadius="12"
+                              RenderingBias="Quality" />
+        </Path.Effect>
+        <Path.Data>
+            <PathGeometry x:Name="Geometry">
+                <PathGeometry.Figures>
+                    <PathFigure  x:Name="Figure">
+                        <PathFigure.Segments>
+                            <ArcSegment x:Name="Segment" />
+                        </PathFigure.Segments>
+                    </PathFigure>
+                </PathGeometry.Figures>
+            </PathGeometry>
+        </Path.Data>
+    </Path>
 </UserControl>

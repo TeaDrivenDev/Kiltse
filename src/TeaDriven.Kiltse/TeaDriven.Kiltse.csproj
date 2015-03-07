@@ -58,6 +58,10 @@
     <Compile Include="Arc.xaml.cs">
       <DependentUpon>Arc.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ConverterMarkupExtension.cs" />
+    <Compile Include="ListItemToPositionConverter.cs" />
+    <Compile Include="Maths.cs" />
+    <Compile Include="MultiplyValueConverter.cs" />
     <Compile Include="Ring.xaml.cs">
       <DependentUpon>Ring.xaml</DependentUpon>
       <SubType>Code</SubType>

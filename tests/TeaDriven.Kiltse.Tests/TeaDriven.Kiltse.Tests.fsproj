@@ -58,6 +58,7 @@
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <ItemGroup>
     <Compile Include="Tests.fs" />
+    <None Include="Script1.fsx" />
     <None Include="paket.references" />
   </ItemGroup>
   <ItemGroup>
