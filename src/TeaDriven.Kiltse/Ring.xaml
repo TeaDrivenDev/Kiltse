@@ -22,6 +22,8 @@
                                 TotalItems="{Binding TotalItems}"
                                 SpinDirection="{Binding ElementName=RingControl, Path=SpinDirection, Mode=OneWay}"
                                 StartAngle="{Binding ElementName=RingControl, Path=StartAngle, Mode=OneWay}" />
+                    <!--StrokeThickness="{Binding ElementName=RingControl, Path=StrokeThickness, Mode=OneWay}"
+                                HighlightStrokeThickness="{Binding ElementName=RingControl, Path=HighlightStrokeThickness, Mode=OneWay}" />-->
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
             <ItemsControl.ItemsPanel>

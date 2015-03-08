@@ -79,6 +79,26 @@ namespace TeaDriven.Kiltse
             set { SetValue(StartAngleProperty, value); }
         }
 
+        //public static readonly DependencyProperty StrokeThicknessProperty =
+        //    DependencyProperty.Register("StrokeThickness", typeof(double), typeof(Ring),
+        //        new FrameworkPropertyMetadata(2d, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        //public double StrokeThickness
+        //{
+        //    get { return (double)GetValue(StrokeThicknessProperty); }
+        //    set { SetValue(StrokeThicknessProperty, value); }
+        //}
+
+        //public static readonly DependencyProperty HighlightStrokeThicknessProperty =
+        //    DependencyProperty.Register("HighlightStrokeThickness", typeof(double), typeof(Ring),
+        //        new PropertyMetadata(4d));
+
+        //public double HighlightStrokeThickness
+        //{
+        //    get { return (double)GetValue(HighlightStrokeThicknessProperty); }
+        //    set { SetValue(HighlightStrokeThicknessProperty, value); }
+        //}
+
         private void Recalculate()
         {
             const double gapPixels = 3;

@@ -105,6 +105,26 @@ namespace TeaDriven.Kiltse
             get { return (double)GetValue(StartAngleProperty); }
             set { SetValue(StartAngleProperty, value); }
         }
+
+        public static readonly DependencyProperty StrokeThicknessProperty =
+            DependencyProperty.Register("StrokeThickness", typeof(double), typeof(Ring),
+                new PropertyMetadata(2d));
+
+        public double StrokeThickness
+        {
+            get { return (double)GetValue(StrokeThicknessProperty); }
+            set { SetValue(StrokeThicknessProperty, value); }
+        }
+
+        public static readonly DependencyProperty HighlightStrokeThicknessProperty =
+            DependencyProperty.Register("HighlightStrokeThickness", typeof(double), typeof(Ring),
+                new PropertyMetadata(4d));
+
+        public double HighlightStrokeThickness
+        {
+            get { return (double)GetValue(HighlightStrokeThicknessProperty); }
+            set { SetValue(HighlightStrokeThicknessProperty, value); }
+        }
     }
 
     public class RingItem
