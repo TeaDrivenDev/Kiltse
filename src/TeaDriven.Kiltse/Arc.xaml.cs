@@ -68,6 +68,17 @@ namespace TeaDriven.Kiltse
             set { SetValue(SpinDirectionProperty, value); }
         }
 
+        public static readonly DependencyProperty StartAngleProperty =
+            DependencyProperty.Register("StartAngle", typeof(double), typeof(Arc),
+                new FrameworkPropertyMetadata(90d, FrameworkPropertyMetadataOptions.AffectsRender,
+                    PropertyChangedCallback));
+
+        public double StartAngle
+        {
+            get { return (double)GetValue(StartAngleProperty); }
+            set { SetValue(StartAngleProperty, value); }
+        }
+
         private void Recalculate()
         {
             const double gapPixels = 3;
@@ -76,10 +87,10 @@ namespace TeaDriven.Kiltse
             var arcAngle = Maths.ArcAngle(TotalItems);
 
             var arcStartAngle =
-                Maths.AdjustForDirection(SpinDirection, 90,
+                Maths.AdjustForDirection(SpinDirection, StartAngle,
                     Maths.ArcStartAngle(ItemIndex, arcAngle, gapHalfAngle));
             var arcEndAngle =
-                Maths.AdjustForDirection(SpinDirection, 90,
+                Maths.AdjustForDirection(SpinDirection, StartAngle,
                     Maths.ArcEndAngle(ItemIndex, arcAngle, gapHalfAngle));
 
             var relativeStart =

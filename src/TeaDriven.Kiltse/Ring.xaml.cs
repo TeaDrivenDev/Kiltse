@@ -88,13 +88,22 @@ namespace TeaDriven.Kiltse
 
         public static readonly DependencyProperty SpinDirectionProperty =
             DependencyProperty.Register("SpinDirection", typeof(SpinDirection), typeof(Ring),
-                new FrameworkPropertyMetadata(default(SpinDirection),
-                    FrameworkPropertyMetadataOptions.AffectsRender));
+                new PropertyMetadata(default(SpinDirection)));
 
         public SpinDirection SpinDirection
         {
             get { return (SpinDirection)GetValue(SpinDirectionProperty); }
             set { SetValue(SpinDirectionProperty, value); }
+        }
+
+        public static readonly DependencyProperty StartAngleProperty =
+            DependencyProperty.Register("StartAngle", typeof(double), typeof(Ring),
+                new PropertyMetadata(90d));
+
+        public double StartAngle
+        {
+            get { return (double)GetValue(StartAngleProperty); }
+            set { SetValue(StartAngleProperty, value); }
         }
     }
 
