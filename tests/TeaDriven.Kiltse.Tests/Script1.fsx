@@ -198,9 +198,10 @@ createSky 5
 
 
 
-let ring = Ring(Radius = 40., DisplayName = "Da", ItemsSource = ([0..6] |> List.map box))
-Canvas.SetLeft(ring, 100.)
-Canvas.SetTop(ring, 100.)
+let ring = Ring(Radius = 250., DisplayName = "Large", ItemsSource = ([0..200] |> List.map box))
+makeDraggable ring
+Canvas.SetLeft(ring, 400.)
+Canvas.SetTop(ring, 400.)
 
 
 //ring.ItemsSource <- [0..10] |> List.map box 
