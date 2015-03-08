@@ -1,18 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace TeaDriven.Kiltse
 {
@@ -86,14 +77,14 @@ namespace TeaDriven.Kiltse
             get { return this._items; }
         }
 
-        public static readonly DependencyProperty SpinDirectionProperty =
-            DependencyProperty.Register("SpinDirection", typeof(SpinDirection), typeof(Ring),
-                new PropertyMetadata(default(SpinDirection)));
+        public static readonly DependencyProperty DirectionProperty =
+            DependencyProperty.Register("Direction", typeof(SweepDirection), typeof(Ring),
+                new PropertyMetadata(default(SweepDirection)));
 
-        public SpinDirection SpinDirection
+        public SweepDirection Direction
         {
-            get { return (SpinDirection)GetValue(SpinDirectionProperty); }
-            set { SetValue(SpinDirectionProperty, value); }
+            get { return (SweepDirection)GetValue(DirectionProperty); }
+            set { SetValue(DirectionProperty, value); }
         }
 
         public static readonly DependencyProperty StartAngleProperty =

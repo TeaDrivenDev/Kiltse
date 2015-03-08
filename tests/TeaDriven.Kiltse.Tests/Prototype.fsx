@@ -67,12 +67,22 @@ let relativePeripheralCoordinates radius angle =
 
 let contentDistance = 30.
 
-type Direction = Clockwise | Counterclockwise
 
 let adjustForDirection direction (startAngle : float<deg>) (angle : float<deg>) =
-    let sign = if direction = Clockwise then -1. else 1.
+    let sign = if direction = SweepDirection.Clockwise then -1. else 1.
 
     startAngle + (sign * angle)
+
+
+let createTextBlock (cx, cy) name =
+    let tx = TextBlock(Text = name)
+    tx.Foreground <- Brushes.AntiqueWhite
+    tx.FontSize <- 12.
+    tx.Background <- SolidColorBrush(Color.FromRgb(0x10uy, 0x10uy, 0x10uy))
+    Canvas.SetLeft(tx, cx) 
+    Canvas.SetTop(tx, cy)
+
+
 
 let arc radius totalInt indexInt =
     let total, index = float totalInt, float indexInt
@@ -83,8 +93,8 @@ let arc radius totalInt indexInt =
 
     let arcAngle = 360.<deg> / total
 
-    let direction = Clockwise
-    let startAngle = 45.<deg>
+    let direction = SweepDirection.Counterclockwise
+    let startAngle = 180.<deg>
 
     let arcStartAngle = index * arcAngle + gapHalfAngle |> adjustForDirection direction startAngle
     let arcEndAngle = (index + 1.) * arcAngle - gapHalfAngle |> adjustForDirection direction startAngle
@@ -95,19 +105,12 @@ let arc radius totalInt indexInt =
 
     let cx, cy = radius + ccRelativeX, radius + ccRelativeY
     
-    let tx = TextBlock(Text = "Dings")
-    tx.Foreground <- Brushes.AntiqueWhite
-    tx.FontSize <- 12.
-    tx.Background <- SolidColorBrush(Color.FromRgb(0x10uy, 0x10uy, 0x10uy))
-    Canvas.SetLeft(tx, cx) 
-    Canvas.SetTop(tx, cy)
-
     let arcStartX, arcStartY =
-        if direction = Clockwise then arcStartAngle else arcEndAngle
+        arcEndAngle
         |> relativePeripheralCoordinates radius
          
     let arcEndX, arcEndY =
-        if direction = Clockwise then arcEndAngle else arcStartAngle
+        arcStartAngle
         |> relativePeripheralCoordinates radius
 
 
@@ -115,12 +118,14 @@ let arc radius totalInt indexInt =
     let ex, ey = radius + arcStartX, radius + arcStartY
 
     
+    let tx = createTextBlock (cx, cy) "Dings"
 
 
     let arcSeg = ArcSegment()
     arcSeg.Point <- Point(ex, ey)
     arcSeg.Size <- Size(radius, radius)
     arcSeg.IsLargeArc <- (total = 1.)
+    arcSeg.SweepDirection <- direction
 
 
     let pathFigure = PathFigure()
@@ -139,7 +144,7 @@ let arc radius totalInt indexInt =
 
     let arcPath = Path()
     arcPath.Stroke <- SolidColorBrush color
-    arcPath.StrokeThickness <- 2.
+    arcPath.StrokeThickness <- 15.
     arcPath.Effect <- getEffect color
     arcPath.Data <- pathGeometry
 
@@ -186,5 +191,12 @@ let createStar name radius (x, y) segments =
 
 
 
-createStar "Dings" 50. (200., 200.) [0..7]
-|> canvas.Children.Add
+
+[1; 7]
+|> List.iter (fun n -> 
+    createStar "Dings" 50. (200., 200.) [0..n-1]
+    |> canvas.Children.Add
+    |> ignore)
+
+
+

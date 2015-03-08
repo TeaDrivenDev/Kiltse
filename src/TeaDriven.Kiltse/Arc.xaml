@@ -46,7 +46,8 @@
                 <PathGeometry.Figures>
                     <PathFigure  x:Name="Figure">
                         <PathFigure.Segments>
-                            <ArcSegment x:Name="Segment" />
+                            <ArcSegment x:Name="Segment"
+                                        SweepDirection="{Binding ElementName=ArcControl, Path=Direction, Mode=OneWay}" />
                         </PathFigure.Segments>
                     </PathFigure>
                 </PathGeometry.Figures>

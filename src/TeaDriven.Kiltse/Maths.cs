@@ -1,5 +1,6 @@
 using System;
 using System.Windows;
+using System.Windows.Media;
 
 namespace TeaDriven.Kiltse
 {
@@ -45,9 +46,9 @@ namespace TeaDriven.Kiltse
             return new Point(radius + relativeCoordinates.Item1, radius + relativeCoordinates.Item2);
         }
 
-        public static double AdjustForDirection(SpinDirection spinDirection, double startAngle, double angle)
+        public static double AdjustForDirection(SweepDirection direction, double startAngle, double angle)
         {
-            var sign = (SpinDirection.Clockwise == spinDirection ? -1 : 1);
+            var sign = (SweepDirection.Clockwise == direction ? -1 : 1);
 
             return startAngle + (sign * angle);
         }

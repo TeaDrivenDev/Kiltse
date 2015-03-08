@@ -143,25 +143,25 @@ let createSky numberOfStars =
 
 
 let ring = Ring(Radius = 50., DisplayName = "Dings", ItemsSource = ([0..10] |> List.map box))
-ring.SpinDirection <- SpinDirection.CounterClockwise
 TestWindow.makeDraggable ring
 Canvas.SetLeft(ring, 200.)
 Canvas.SetTop(ring, 200.)
 
-ring.StartAngle <- 120.
+ring.StartAngle <- 270.
+ring.Direction <- SweepDirection.Counterclockwise
 
 //ring.ItemsSource <- [0..10] |> List.map box 
 
 ring |> canvas.Children.Add
 
 
-
-[0. .. 10. .. 360.]
-|> List.iter (fun angle -> ring.StartAngle <- angle; Thread.Sleep 500)
-
-let dispatcher = System.Windows.Threading.Dispatcher.CurrentDispatcher;
-
-Thread(ThreadStart(fun () ->
-        [0. .. 10. .. 360.]
-        |> List.iter (fun angle ->
-            dispatcher.InvokeAsync(Action(fun () -> ring.StartAngle <- angle)) |> ignore; Thread.Sleep 500) )).Start()
+//
+//[0. .. 10. .. 360.]
+//|> List.iter (fun angle -> ring.StartAngle <- angle; Thread.Sleep 500)
+//
+//let dispatcher = System.Windows.Threading.Dispatcher.CurrentDispatcher;
+//
+//Thread(ThreadStart(fun () ->
+//        [0. .. 10. .. 360.]
+//        |> List.iter (fun angle ->
+//            dispatcher.InvokeAsync(Action(fun () -> ring.StartAngle <- angle)) |> ignore; Thread.Sleep 500) )).Start()

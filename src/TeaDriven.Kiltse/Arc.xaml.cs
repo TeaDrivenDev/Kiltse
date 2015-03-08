@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace TeaDriven.Kiltse
 {
@@ -57,15 +58,15 @@ namespace TeaDriven.Kiltse
             }
         }
 
-        public static readonly DependencyProperty SpinDirectionProperty =
-            DependencyProperty.Register("SpinDirection", typeof(SpinDirection), typeof(Arc),
-            new FrameworkPropertyMetadata(SpinDirection.Clockwise,
+        public static readonly DependencyProperty DirectionProperty =
+            DependencyProperty.Register("Direction", typeof(SweepDirection), typeof(Arc),
+            new FrameworkPropertyMetadata(SweepDirection.Clockwise,
                 FrameworkPropertyMetadataOptions.AffectsRender, PropertyChangedCallback));
 
-        public SpinDirection SpinDirection
+        public SweepDirection Direction
         {
-            get { return (SpinDirection)GetValue(SpinDirectionProperty); }
-            set { SetValue(SpinDirectionProperty, value); }
+            get { return (SweepDirection)GetValue(DirectionProperty); }
+            set { SetValue(DirectionProperty, value); }
         }
 
         public static readonly DependencyProperty StartAngleProperty =
@@ -107,20 +108,14 @@ namespace TeaDriven.Kiltse
             var arcAngle = Maths.ArcAngle(TotalItems);
 
             var arcStartAngle =
-                Maths.AdjustForDirection(SpinDirection, StartAngle,
+                Maths.AdjustForDirection(Direction, StartAngle,
                     Maths.ArcStartAngle(ItemIndex, arcAngle, gapHalfAngle));
             var arcEndAngle =
-                Maths.AdjustForDirection(SpinDirection, StartAngle,
+                Maths.AdjustForDirection(Direction, StartAngle,
                     Maths.ArcEndAngle(ItemIndex, arcAngle, gapHalfAngle));
 
-            var relativeStart =
-                (SpinDirection.Clockwise == SpinDirection
-                    ? Maths.RelativePeripheralCoordinates(Radius, arcStartAngle)
-                    : Maths.RelativePeripheralCoordinates(Radius, arcEndAngle));
-            var relativeEnd =
-                (SpinDirection.Clockwise == SpinDirection
-                    ? Maths.RelativePeripheralCoordinates(Radius, arcEndAngle)
-                    : Maths.RelativePeripheralCoordinates(Radius, arcStartAngle));
+            var relativeStart = Maths.RelativePeripheralCoordinates(Radius, arcEndAngle);
+            var relativeEnd = Maths.RelativePeripheralCoordinates(Radius, arcStartAngle);
 
             var startPoint = Maths.AbsolutePoint(Radius, relativeStart);
             var endPoint = Maths.AbsolutePoint(Radius, relativeEnd);
