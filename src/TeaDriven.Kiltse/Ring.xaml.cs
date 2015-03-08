@@ -85,6 +85,17 @@ namespace TeaDriven.Kiltse
         {
             get { return this._items; }
         }
+
+        public static readonly DependencyProperty SpinDirectionProperty =
+            DependencyProperty.Register("SpinDirection", typeof(SpinDirection), typeof(Ring),
+                new FrameworkPropertyMetadata(default(SpinDirection),
+                    FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public SpinDirection SpinDirection
+        {
+            get { return (SpinDirection)GetValue(SpinDirectionProperty); }
+            set { SetValue(SpinDirectionProperty, value); }
+        }
     }
 
     public class RingItem

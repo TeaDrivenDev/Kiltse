@@ -19,7 +19,8 @@
                 <DataTemplate>
                     <kiltse:Arc Radius="{Binding ElementName=RingControl, Path=Radius}"
                                 ItemIndex="{Binding ItemIndex}"
-                                TotalItems="{Binding TotalItems}" />
+                                TotalItems="{Binding TotalItems}"
+                                SpinDirection="{Binding ElementName=RingControl, Path=SpinDirection, Mode=OneWay}" />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
             <ItemsControl.ItemsPanel>

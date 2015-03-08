@@ -1,14 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace TeaDriven.Kiltse
 {
@@ -27,15 +18,33 @@ namespace TeaDriven.Kiltse
                 new FrameworkPropertyMetadata(default(double),
                     FrameworkPropertyMetadataOptions.AffectsRender, PropertyChangedCallback));
 
+        public double Radius
+        {
+            get { return (double)this.GetValue(RadiusProperty); }
+            set { this.SetValue(RadiusProperty, value); }
+        }
+
         public static DependencyProperty ItemIndexProperty =
-            DependencyProperty.Register("ItemIndex", typeof(int), typeof(Arc),
-                new FrameworkPropertyMetadata(default(int),
-                    FrameworkPropertyMetadataOptions.AffectsRender, PropertyChangedCallback));
+             DependencyProperty.Register("ItemIndex", typeof(int), typeof(Arc),
+                 new FrameworkPropertyMetadata(default(int),
+                     FrameworkPropertyMetadataOptions.AffectsRender, PropertyChangedCallback));
+
+        public int ItemIndex
+        {
+            get { return (int)this.GetValue(ItemIndexProperty); }
+            set { this.SetValue(ItemIndexProperty, value); }
+        }
 
         public static DependencyProperty TotalItemsProperty =
             DependencyProperty.Register("TotalItems", typeof(int), typeof(Arc),
                 new FrameworkPropertyMetadata(1, FrameworkPropertyMetadataOptions.AffectsRender,
                     PropertyChangedCallback));
+
+        public int TotalItems
+        {
+            get { return (int)this.GetValue(TotalItemsProperty); }
+            set { this.SetValue(TotalItemsProperty, value); }
+        }
 
         private static void PropertyChangedCallback(DependencyObject dependencyObject,
             DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
@@ -48,22 +57,15 @@ namespace TeaDriven.Kiltse
             }
         }
 
-        public double Radius
-        {
-            get { return (double)this.GetValue(RadiusProperty); }
-            set { this.SetValue(RadiusProperty, value); }
-        }
+        public static readonly DependencyProperty SpinDirectionProperty =
+            DependencyProperty.Register("SpinDirection", typeof(SpinDirection), typeof(Arc),
+            new FrameworkPropertyMetadata(SpinDirection.Clockwise,
+                FrameworkPropertyMetadataOptions.AffectsRender, PropertyChangedCallback));
 
-        public int ItemIndex
+        public SpinDirection SpinDirection
         {
-            get { return (int)this.GetValue(ItemIndexProperty); }
-            set { this.SetValue(ItemIndexProperty, value); }
-        }
-
-        public int TotalItems
-        {
-            get { return (int)this.GetValue(TotalItemsProperty); }
-            set { this.SetValue(TotalItemsProperty, value); }
+            get { return (SpinDirection)GetValue(SpinDirectionProperty); }
+            set { SetValue(SpinDirectionProperty, value); }
         }
 
         private void Recalculate()
@@ -71,12 +73,23 @@ namespace TeaDriven.Kiltse
             const double gapPixels = 3;
 
             var gapHalfAngle = Maths.GapHalfAngle(gapPixels, Radius);
-            var arcAngle = Maths.ArcAngle(this.TotalItems);
-            var arcStartAngle = Maths.ArcStartAngle(ItemIndex, arcAngle, gapHalfAngle);
-            var arcEndAngle = Maths.ArcEndAngle(ItemIndex, arcAngle, gapHalfAngle);
+            var arcAngle = Maths.ArcAngle(TotalItems);
 
-            var relativeStart = Maths.RelativePeripheralCoordinates(Radius, arcStartAngle);
-            var relativeEnd = Maths.RelativePeripheralCoordinates(Radius, arcEndAngle);
+            var arcStartAngle =
+                Maths.AdjustForDirection(SpinDirection, 90,
+                    Maths.ArcStartAngle(ItemIndex, arcAngle, gapHalfAngle));
+            var arcEndAngle =
+                Maths.AdjustForDirection(SpinDirection, 90,
+                    Maths.ArcEndAngle(ItemIndex, arcAngle, gapHalfAngle));
+
+            var relativeStart =
+                (SpinDirection.Clockwise == SpinDirection
+                    ? Maths.RelativePeripheralCoordinates(Radius, arcStartAngle)
+                    : Maths.RelativePeripheralCoordinates(Radius, arcEndAngle));
+            var relativeEnd =
+                (SpinDirection.Clockwise == SpinDirection
+                    ? Maths.RelativePeripheralCoordinates(Radius, arcEndAngle)
+                    : Maths.RelativePeripheralCoordinates(Radius, arcStartAngle));
 
             var startPoint = Maths.AbsolutePoint(Radius, relativeStart);
             var endPoint = Maths.AbsolutePoint(Radius, relativeEnd);

@@ -22,7 +22,7 @@ namespace TeaDriven.Kiltse
 
         public static double ArcEndAngle(int index, double arcAngle, double gapHalfAngle)
         {
-            return (index + 1)*arcAngle - gapHalfAngle;
+            return (index + 1) * arcAngle - gapHalfAngle;
         }
 
         public static double ToPolar(double cartesianAngle)
@@ -34,15 +34,22 @@ namespace TeaDriven.Kiltse
         {
             var polarAngle = ToPolar(cartesianAngle);
 
-            var relativeX = radius*Math.Cos(polarAngle);
-            var relativeY = radius*Math.Sin(polarAngle);
+            var relativeX = radius * Math.Cos(polarAngle);
+            var relativeY = radius * Math.Sin(polarAngle);
 
-            return Tuple.Create(relativeY, -relativeX);
+            return Tuple.Create(relativeX, -relativeY);
         }
 
         public static Point AbsolutePoint(double radius, Tuple<double, double> relativeCoordinates)
         {
             return new Point(radius + relativeCoordinates.Item1, radius + relativeCoordinates.Item2);
+        }
+
+        public static double AdjustForDirection(SpinDirection spinDirection, double startAngle, double angle)
+        {
+            var sign = (SpinDirection.Clockwise == spinDirection ? -1 : 1);
+
+            return startAngle + (sign * angle);
         }
     }
 }

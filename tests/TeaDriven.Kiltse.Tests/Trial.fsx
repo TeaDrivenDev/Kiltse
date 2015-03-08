@@ -128,18 +128,23 @@ let createSky numberOfStars =
 
 
 
-canvas.Children.Clear()
+//canvas.Children.Clear()
+//
+//
+//createSky 5
 
 
-createSky 5
 
 
 
 
-let ring = Ring(Radius = 250., DisplayName = "Large", ItemsSource = ([0..200] |> List.map box))
+
+
+let ring = Ring(Radius = 50., DisplayName = "Dings", ItemsSource = ([0..10] |> List.map box))
+//ring.SpinDirection <- SpinDirection.CounterClockwise
 TestWindow.makeDraggable ring
-Canvas.SetLeft(ring, 400.)
-Canvas.SetTop(ring, 400.)
+Canvas.SetLeft(ring, 200.)
+Canvas.SetTop(ring, 200.)
 
 
 //ring.ItemsSource <- [0..10] |> List.map box 
