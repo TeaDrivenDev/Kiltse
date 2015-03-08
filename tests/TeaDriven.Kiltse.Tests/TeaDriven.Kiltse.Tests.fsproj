@@ -59,7 +59,8 @@
   <ItemGroup>
     <Compile Include="Tests.fs" />
     <None Include="TestWindow.fsx" />
-    <None Include="Script1.fsx" />
+    <None Include="Prototype.fsx" />
+    <None Include="Trial.fsx" />
     <None Include="paket.references" />
   </ItemGroup>
   <ItemGroup>
