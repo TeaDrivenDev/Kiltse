@@ -145,8 +145,3 @@ Canvas.SetTop(ring, 400.)
 //ring.ItemsSource <- [0..10] |> List.map box 
 
 ring |> canvas.Children.Add
-
-
-let items = [0..6] |> List.map box
-
-Ring(Radius = 40., DisplayName = "Da", ItemsSource = items) |> canvas.Children.Add

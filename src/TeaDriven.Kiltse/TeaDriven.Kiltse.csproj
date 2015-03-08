@@ -59,7 +59,7 @@
       <DependentUpon>Arc.xaml</DependentUpon>
     </Compile>
     <Compile Include="ConverterMarkupExtension.cs" />
-    <Compile Include="ListItemToPositionConverter.cs" />
+    <Compile Include="DisplayNameWidthConverter.cs" />
     <Compile Include="Maths.cs" />
     <Compile Include="MultiplyValueConverter.cs" />
     <Compile Include="Ring.xaml.cs">
