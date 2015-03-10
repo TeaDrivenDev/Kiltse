@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace TeaDriven.Kiltse
@@ -79,7 +80,7 @@ namespace TeaDriven.Kiltse
 
         public static readonly DependencyProperty DirectionProperty =
             DependencyProperty.Register("Direction", typeof(SweepDirection), typeof(Ring),
-                new PropertyMetadata(default(SweepDirection)));
+                new PropertyMetadata(SweepDirection.Clockwise));
 
         public SweepDirection Direction
         {
@@ -115,6 +116,29 @@ namespace TeaDriven.Kiltse
         {
             get { return (double)GetValue(HighlightStrokeThicknessProperty); }
             set { SetValue(HighlightStrokeThicknessProperty, value); }
+        }
+
+        public static RoutedEvent RingSegmentClickEvent =
+            EventManager.RegisterRoutedEvent("RingSegmentClick", RoutingStrategy.Bubble,
+                typeof(RoutedEvent), typeof(Ring));
+
+        public event RoutedEventHandler RingSegmentClick
+        {
+            add { this.AddHandler(RingSegmentClickEvent, value); }
+
+            remove { this.RemoveHandler(RingSegmentClickEvent, value); }
+        }
+
+        private void Arc_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            var arc = sender as Arc;
+
+            if (null != arc)
+            {
+                var ringItem = (RingItem)arc.DataContext;
+
+                RaiseEvent(new RingSegmentClickEventArgs(RingSegmentClickEvent, ringItem));
+            }
         }
     }
 

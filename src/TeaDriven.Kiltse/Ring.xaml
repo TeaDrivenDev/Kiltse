@@ -21,7 +21,8 @@
                                 ItemIndex="{Binding ItemIndex}"
                                 TotalItems="{Binding TotalItems}"
                                 Direction="{Binding ElementName=RingControl, Path=Direction, Mode=OneWay}"
-                                StartAngle="{Binding ElementName=RingControl, Path=StartAngle, Mode=OneWay}" />
+                                StartAngle="{Binding ElementName=RingControl, Path=StartAngle, Mode=OneWay}"
+                                MouseLeftButtonUp="Arc_OnMouseLeftButtonUp" />
                     <!--StrokeThickness="{Binding ElementName=RingControl, Path=StrokeThickness, Mode=OneWay}"
                                 HighlightStrokeThickness="{Binding ElementName=RingControl, Path=HighlightStrokeThickness, Mode=OneWay}" />-->
                 </DataTemplate>

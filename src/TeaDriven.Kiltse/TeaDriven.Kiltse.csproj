@@ -47,6 +47,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="RingSegmentClickEventArgs.cs" />
     <Page Include="Arc.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

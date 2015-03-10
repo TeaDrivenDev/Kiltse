@@ -130,7 +130,7 @@ let createSky numberOfStars =
 
 
 
-//canvas.Children.Clear()
+canvas.Children.Clear()
 //
 //
 //createSky 5
@@ -140,17 +140,20 @@ let createSky numberOfStars =
 
 
 
+let items = names |> Seq.take 11 |> Seq.toList
 
-
-let ring = Ring(Radius = 50., DisplayName = "Dings", ItemsSource = ([0..10] |> List.map box))
-TestWindow.makeDraggable ring
+let ring = Ring(Radius = 50., DisplayName = "Dings", ItemsSource = (items |> List.map box))
+//TestWindow.makeDraggable ring
 Canvas.SetLeft(ring, 200.)
 Canvas.SetTop(ring, 200.)
 
-ring.StartAngle <- 270.
-ring.Direction <- SweepDirection.Counterclockwise
+ring.StrokeThickness <- 8.
+ring.HighlightStrokeThickness <- 12.
 
 //ring.ItemsSource <- [0..10] |> List.map box 
+//ring.RingSegmentClick.AddHandler(fun o e ->
+//    let ringItem = (e :?> RingSegmentClickEventArgs).Item
+//    MessageBox.Show(ringItem.Item.ToString()) |> ignore)
 
 ring |> canvas.Children.Add
 
