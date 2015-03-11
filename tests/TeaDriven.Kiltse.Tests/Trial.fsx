@@ -1,10 +1,9 @@
-﻿
-#r "System.Windows.dll"
+﻿#r "System.Windows.dll"
 #r "PresentationFramework.dll"
 #r "PresentationCore.dll"
 #r "WindowsBase.dll"
 #r "System.Xaml.dll"
-
+#r @"..\..\packages\FsEye\lib\net40\FsEye.dll"
 #r @"bin\Debug\TeaDriven.Kiltse.dll"
 
 open System
@@ -18,6 +17,7 @@ open System.Windows.Input
 
 
 #load "TestWindow.fsx"
+#load @"..\..\packages\FsEye\content\FsEye.fsx"
 
 
 
