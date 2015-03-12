@@ -47,6 +47,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Iris.cs" />
     <Compile Include="RingSegmentClickEventArgs.cs" />
     <Page Include="Arc.xaml">
       <SubType>Designer</SubType>
@@ -67,6 +68,10 @@
       <DependentUpon>Ring.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

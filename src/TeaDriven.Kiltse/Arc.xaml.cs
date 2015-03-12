@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -80,6 +81,17 @@ namespace TeaDriven.Kiltse
             set { SetValue(StartAngleProperty, value); }
         }
 
+        public static readonly DependencyProperty StrokeProperty =
+            DependencyProperty.Register("Stroke", typeof(Brush), typeof(Arc),
+                new FrameworkPropertyMetadata(default(Brush),
+                    FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush Stroke
+        {
+            get { return (Brush)GetValue(StrokeProperty); }
+            set { SetValue(StrokeProperty, value); }
+        }
+
         //public static readonly DependencyProperty StrokeThicknessProperty =
         //    DependencyProperty.Register("StrokeThickness", typeof(double), typeof(Ring),
         //        new FrameworkPropertyMetadata(2d, FrameworkPropertyMetadataOptions.AffectsRender));
@@ -102,6 +114,8 @@ namespace TeaDriven.Kiltse
 
         private void Recalculate()
         {
+            Console.WriteLine("{0} {1} {2}", ItemIndex, TotalItems, Radius);
+
             const double gapPixels = 3;
 
             var gapHalfAngle = Maths.GapHalfAngle(gapPixels, Radius);

@@ -8,14 +8,14 @@
              d:DesignHeight="300"
              d:DesignWidth="300"
              x:Name="ArcControl">
-    <Path Name="Path">
+    <Path Name="Path"
+          Stroke="{Binding ElementName=ArcControl, Path=Stroke}">
         <Path.Style>
             <Style TargetType="Path">
-                <Setter Property="Stroke"
-                        Value="AntiqueWhite" />
                 <Setter Property="StrokeThickness"
-                        Value="{Binding RelativeSource={RelativeSource AncestorType=kiltse:Ring}, Path=StrokeThickness}" />
-                <Style.Triggers>
+                        Value="2" />
+                <!--Value="{Binding RelativeSource={RelativeSource AncestorType=kiltse:Iris}, Path=StrokeThickness}" />-->
+                <!--<Style.Triggers>
                     <DataTrigger Binding="{Binding ElementName=ArcControl, Path=ItemIndex}"
                                  Value="0">
                         <Setter Property="Stroke"
@@ -29,18 +29,18 @@
                     <Trigger Property="IsMouseOver"
                              Value="True">
                         <Setter Property="StrokeThickness"
-                                Value="{Binding RelativeSource={RelativeSource AncestorType=kiltse:Ring}, Path=HighlightStrokeThickness}" />
+                                Value="{Binding RelativeSource={RelativeSource AncestorType=kiltse:Iris}, Path=HighlightStrokeThickness}" />
                     </Trigger>
-                </Style.Triggers>
+                </Style.Triggers>-->
             </Style>
         </Path.Style>
-        <Path.Effect>
+        <!--<Path.Effect>
             <DropShadowEffect ShadowDepth="0"
                               Color="{Binding ElementName=Path, Path=Stroke.Color}"
                               Opacity="1"
                               BlurRadius="12"
                               RenderingBias="Quality" />
-        </Path.Effect>
+        </Path.Effect>-->
         <Path.Data>
             <PathGeometry x:Name="Geometry">
                 <PathGeometry.Figures>

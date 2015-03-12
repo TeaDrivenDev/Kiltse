@@ -19,6 +19,8 @@ open System.Windows.Input
 #load "TestWindow.fsx"
 #load @"..\..\packages\FsEye\content\FsEye.fsx"
 
+open System.Windows.Data
+
 
 
 let window, canvas = TestWindow.window, TestWindow.canvas
@@ -135,20 +137,52 @@ canvas.Children.Clear()
 //
 //createSky 5
 
+type FizzbuzzConverter() = 
+    interface IValueConverter with
+            member x.Convert(value : obj, targetType : Type, parameter : obj, culture : Globalization.CultureInfo) : obj =
+                if null = value then
+                    printfn "---- null"
+                    Unchecked.defaultof<Brush>
+                else
+                    printfn "---- Value: %s" (value.GetType().ToString())
+
+                    match value with
+                    | :? string -> Brushes.DarkOrange
+                    | :? RingItem as ringItem -> 
+                        match ringItem.ItemIndex with
+                        | x when x % 3 = 0 && x % 5 = 0 -> Brushes.Red
+                        | x when x % 3 = 0 -> Brushes.GreenYellow
+                        | x when x % 5 = 0 -> Brushes.DeepSkyBlue
+                        | _ -> Brushes.AntiqueWhite
+                    :> Brush
+                |> box
+          
+            member x.ConvertBack(value : obj, targetType : Type, parameter : obj, culture : Globalization.CultureInfo) : obj = 
+                failwith "Not implemented yet"
 
 
 
 
 
-let items = names |> Seq.take 11 |> Seq.toList
+let items = names |> Seq.take 15 |> Seq.map box
 
-let ring = Ring(Radius = 50., DisplayName = "Dings", ItemsSource = (items |> List.map box))
+let ring = Iris(Radius = 50., DisplayName = "Dings", ItemsSource = items)
+ring.Stroke <- Brushes.Green
 //TestWindow.makeDraggable ring
 Canvas.SetLeft(ring, 200.)
 Canvas.SetTop(ring, 200.)
 
-ring.StrokeThickness <- 8.
-ring.HighlightStrokeThickness <- 12.
+//ring.Radius <- 50.
+
+let binding = Binding(".")
+binding.Converter <- FizzbuzzConverter()
+
+ring.SetBinding(Iris.StrokeProperty, binding)
+
+
+//ring.ItemsSource <- items
+//ring.StrokeThickness <- 8.
+//ring.HighlightStrokeThickness <- 12.
 
 //ring.ItemsSource <- [0..10] |> List.map box 
 //ring.RingSegmentClick.AddHandler(fun o e ->
