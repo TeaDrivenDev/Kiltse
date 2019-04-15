@@ -37,6 +37,8 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "TeaDriven.Kiltse.Tests", "t
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeaDriven.Kiltse", "src\TeaDriven.Kiltse\TeaDriven.Kiltse.csproj", "{0701BC74-E8D6-4470-AB65-D4B72A6DB6BB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeaDriven.Kiltse.Demo", "src\TeaDriven.Kiltse.Demo\TeaDriven.Kiltse.Demo.csproj", "{59F442EB-E2B0-409B-8A0C-4561A5AEB507}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{0701BC74-E8D6-4470-AB65-D4B72A6DB6BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0701BC74-E8D6-4470-AB65-D4B72A6DB6BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0701BC74-E8D6-4470-AB65-D4B72A6DB6BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59F442EB-E2B0-409B-8A0C-4561A5AEB507}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59F442EB-E2B0-409B-8A0C-4561A5AEB507}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59F442EB-E2B0-409B-8A0C-4561A5AEB507}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59F442EB-E2B0-409B-8A0C-4561A5AEB507}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
