@@ -2,7 +2,7 @@
 {
     public abstract class StrokeInfoSelector
     {
-        public double DefaultStrokeThickness { get; set; } = 2;
+        public double DefaultStrokeThickness { get; set; } = Constants.DefaultStrokeThickness;
 
         public abstract StrokeInfo GetStrokeInfo(object value);
     }

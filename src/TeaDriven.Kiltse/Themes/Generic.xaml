@@ -24,11 +24,12 @@
                                       VerticalAlignment="Stretch"
                                       ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent},
                                                             Path=Items}">
-
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <kiltse:Arc Direction="{Binding RelativeSource={RelativeSource TemplatedParent},
+                                    <kiltse:Arc Direction="{Binding RelativeSource={RelativeSource AncestorType=kiltse:Iris},
                                                                     Path=Direction}"
+                                                GapWidth="{Binding RelativeSource={RelativeSource AncestorType=kiltse:Iris},
+                                                                   Path=GapWidth}"
                                                 ItemIndex="{Binding ItemIndex}"
                                                 Radius="{Binding RelativeSource={RelativeSource AncestorType=kiltse:Iris},
                                                                  Path=Radius}"

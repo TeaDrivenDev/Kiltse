@@ -20,13 +20,20 @@ namespace TeaDriven.Kiltse
                     default(double),
                     FrameworkPropertyMetadataOptions.AffectsRender, PropertyChangedCallback));
 
+        public static readonly DependencyProperty GapWidthProperty =
+            DependencyProperty.Register(
+                nameof(GapWidth),
+                typeof(double),
+                typeof(Arc),
+                new PropertyMetadata(Constants.DefaultGapWidth));
+
         public static readonly DependencyProperty StartAngleProperty =
             DependencyProperty.Register(
                 nameof(StartAngle),
                 typeof(double),
                 typeof(Arc),
                 new FrameworkPropertyMetadata(
-                    90d,
+                    Constants.DefaultStartAngle,
                     FrameworkPropertyMetadataOptions.AffectsRender,
                     PropertyChangedCallback));
 
@@ -87,6 +94,12 @@ namespace TeaDriven.Kiltse
             set => SetValue(RadiusProperty, value);
         }
 
+        public double GapWidth
+        {
+            get => (double)GetValue(GapWidthProperty);
+            set => SetValue(GapWidthProperty, value);
+        }
+
         public double StartAngle
         {
             get => (double)GetValue(StartAngleProperty);
@@ -141,9 +154,7 @@ namespace TeaDriven.Kiltse
 
         private void Recalculate()
         {
-            const double gapPixels = 3;
-
-            var gapHalfAngle = Maths.GapHalfAngle(gapPixels, Radius);
+            var gapHalfAngle = Maths.GapHalfAngle(GapWidth, Radius);
             var arcAngle = Maths.ArcAngle(TotalItems);
 
             var arcStartAngle =

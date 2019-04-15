@@ -171,7 +171,7 @@ let addRing () =
         |> List.map (fun _ -> selectName names)
         |> List.map box
 
-    let ring = Iris(Radius = 50., DisplayName = "Dings", ItemsSource = items)
+    let ring = Iris(Radius = 50., DisplayName = "Dings", ItemsSource = items, GapWidth = 20.)
     ring.StrokeInfoSelector <- StringFirstLetterStrokeInfoSelector(DefaultStrokeThickness = 7.)
     //TestWindow.makeDraggable ring
     Canvas.SetLeft(ring, 200.)

@@ -32,12 +32,19 @@ namespace TeaDriven.Kiltse
                     default(double),
                     FrameworkPropertyMetadataOptions.AffectsRender));
 
+        public static readonly DependencyProperty GapWidthProperty =
+            DependencyProperty.Register(
+                nameof(GapWidth),
+                typeof(double),
+                typeof(Iris),
+                new PropertyMetadata(Constants.DefaultGapWidth));
+
         public static readonly DependencyProperty StartAngleProperty =
             DependencyProperty.Register(
                 nameof(StartAngle),
                 typeof(double),
                 typeof(Iris),
-                new PropertyMetadata(90d));
+                new PropertyMetadata(Constants.DefaultStartAngle));
 
         public static readonly DependencyProperty DirectionProperty =
             DependencyProperty.Register(
@@ -58,7 +65,7 @@ namespace TeaDriven.Kiltse
                 nameof(StrokeInfoSelector),
                 typeof(StrokeInfoSelector),
                 typeof(Iris),
-                new PropertyMetadata(default(StrokeInfoSelector)));
+                new PropertyMetadata(new DefaultStrokeInfoSelector()));
 
         public string DisplayName
         {
@@ -70,6 +77,12 @@ namespace TeaDriven.Kiltse
         {
             get => (double)GetValue(RadiusProperty);
             set => SetValue(RadiusProperty, value);
+        }
+
+        public double GapWidth
+        {
+            get => (double)GetValue(GapWidthProperty);
+            set => SetValue(GapWidthProperty, value);
         }
 
         public double StartAngle
