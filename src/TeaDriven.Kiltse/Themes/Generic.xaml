@@ -20,6 +20,15 @@
                 <ControlTemplate TargetType="{x:Type kiltse:Iris}">
                     <Grid HorizontalAlignment="Stretch"
                           VerticalAlignment="Stretch">
+                        <Ellipse Width="{Binding RelativeSource={RelativeSource TemplatedParent},
+                                                 Path=Radius,
+                                                 Converter={kiltse:MultiplyValueConverter},
+                                                 ConverterParameter=2}"
+                                 Height="{Binding RelativeSource={RelativeSource TemplatedParent},
+                                                  Path=Radius,
+                                                  Converter={kiltse:MultiplyValueConverter},
+                                                  ConverterParameter=2}"
+                                 Fill="Transparent" />
                         <ItemsControl HorizontalAlignment="Stretch"
                                       VerticalAlignment="Stretch"
                                       ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent},
@@ -67,8 +76,7 @@
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <Canvas HorizontalAlignment="Stretch"
-                                            VerticalAlignment="Stretch"
-                                            Background="Transparent" />
+                                            VerticalAlignment="Stretch" />
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                         </ItemsControl>
