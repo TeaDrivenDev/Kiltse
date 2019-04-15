@@ -39,21 +39,21 @@
                                                                      Path=Items.Count}">
                                         <kiltse:Arc.Stroke>
                                             <MultiBinding Converter="{kiltse:StrokeInfoBrushConverter}">
-                                                <Binding Path="Item" />
+                                                <Binding />
                                                 <Binding Path="StrokeInfoSelector"
                                                          RelativeSource="{RelativeSource AncestorType=kiltse:Iris}" />
                                             </MultiBinding>
                                         </kiltse:Arc.Stroke>
                                         <kiltse:Arc.StrokeThickness>
                                             <MultiBinding Converter="{kiltse:StrokeInfoThicknessConverter}">
-                                                <Binding Path="Item" />
+                                                <Binding />
                                                 <Binding Path="StrokeInfoSelector"
                                                          RelativeSource="{RelativeSource AncestorType=kiltse:Iris}" />
                                             </MultiBinding>
                                         </kiltse:Arc.StrokeThickness>
                                         <kiltse:Arc.StrokeEffect>
                                             <MultiBinding Converter="{kiltse:StrokeInfoEffectConverter}">
-                                                <Binding Path="Item" />
+                                                <Binding />
                                                 <Binding Path="StrokeInfoSelector"
                                                          RelativeSource="{RelativeSource AncestorType=kiltse:Iris}" />
                                             </MultiBinding>

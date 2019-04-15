@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using System.Windows.Data;
 
 namespace TeaDriven.Kiltse
 {
@@ -10,7 +9,7 @@ namespace TeaDriven.Kiltse
         {
             var strokeInfoSelector = values[1] as StrokeInfoSelector;
 
-            return strokeInfoSelector.GetStrokeInfo(values[0]).StrokeThickness;
+            return strokeInfoSelector.GetStrokeInfo(values[0] as RingItem).StrokeThickness;
         }
     }
 }

@@ -4,6 +4,6 @@
     {
         public double DefaultStrokeThickness { get; set; } = Constants.DefaultStrokeThickness;
 
-        public abstract StrokeInfo GetStrokeInfo(object value);
+        public abstract StrokeInfo GetStrokeInfo(RingItem value);
     }
 }

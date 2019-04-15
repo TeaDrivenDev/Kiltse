@@ -156,8 +156,8 @@ type StringFirstLetterStrokeInfoSelector() =
         effect.RenderingBias <- RenderingBias.Quality
         effect
 
-    override __.GetStrokeInfo(value) =
-        let s = string value
+    override __.GetStrokeInfo(value : RingItem) =
+        let s = string value.Item
 
         let red = max ((255 - int s.[0]) * 10) 0
 
@@ -171,9 +171,10 @@ let addRing () =
         |> List.map (fun _ -> selectName names)
         |> List.map box
 
-    let ring = Iris(Radius = 50., DisplayName = "Dings", ItemsSource = items, GapWidth = 20.)
+    let ring = Iris(Radius = 50., DisplayName = "Dings", ItemsSource = items)
     ring.StrokeInfoSelector <- StringFirstLetterStrokeInfoSelector(DefaultStrokeThickness = 7.)
-    //TestWindow.makeDraggable ring
+    ring.Direction <- SweepDirection.Clockwise
+    TestWindow.makeDraggable ring
     Canvas.SetLeft(ring, 200.)
     Canvas.SetTop(ring, 200.)
 
@@ -184,11 +185,11 @@ let addRing () =
 
 addRing ()
 
-let button = Button(Content = "Refresh")
+let button = Button(Content = "Add")
 button.Click.AddHandler (fun _ _ ->
-    canvas.Children.OfType<Iris>()
-    |> Seq.toList
-    |> List.iter canvas.Children.Remove
+    //canvas.Children.OfType<Iris>()
+    //|> Seq.toList
+    //|> List.iter canvas.Children.Remove
 
     addRing() |> ignore)
 

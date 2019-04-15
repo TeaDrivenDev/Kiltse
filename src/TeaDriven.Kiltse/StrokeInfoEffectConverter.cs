@@ -9,7 +9,7 @@ namespace TeaDriven.Kiltse
         {
             var strokeInfoSelector = values[1] as StrokeInfoSelector;
 
-            return strokeInfoSelector.GetStrokeInfo(values[0]).Effect;
+            return strokeInfoSelector.GetStrokeInfo(values[0] as RingItem).Effect;
         }
     }
 }

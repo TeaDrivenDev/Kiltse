@@ -55,6 +55,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="DefaultStrokeInfoSelector.cs" />
     <Compile Include="Iris.cs" />
+    <Compile Include="RingItem.cs" />
     <Compile Include="RingSegmentClickEventArgs.cs" />
     <Compile Include="StrokeInfo.cs" />
     <Compile Include="StrokeInfoBrushConverter.cs" />
