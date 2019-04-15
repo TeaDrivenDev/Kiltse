@@ -1,53 +1,29 @@
 ﻿<UserControl x:Class="TeaDriven.Kiltse.Arc"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:kiltse="clr-namespace:TeaDriven.Kiltse"
-             mc:Ignorable="d"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             x:Name="ArcControl"
              d:DesignHeight="300"
              d:DesignWidth="300"
-             x:Name="ArcControl">
+             mc:Ignorable="d">
     <Path Name="Path"
-          Stroke="{Binding ElementName=ArcControl, Path=Stroke}">
-        <Path.Style>
-            <Style TargetType="Path">
-                <Setter Property="StrokeThickness"
-                        Value="2" />
-                <!--Value="{Binding RelativeSource={RelativeSource AncestorType=kiltse:Iris}, Path=StrokeThickness}" />-->
-                <!--<Style.Triggers>
-                    <DataTrigger Binding="{Binding ElementName=ArcControl, Path=ItemIndex}"
-                                 Value="0">
-                        <Setter Property="Stroke"
-                                Value="Red" />
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding ElementName=ArcControl, Path=ItemIndex}"
-                                 Value="1">
-                        <Setter Property="Stroke"
-                                Value="Cyan" />
-                    </DataTrigger>
-                    <Trigger Property="IsMouseOver"
-                             Value="True">
-                        <Setter Property="StrokeThickness"
-                                Value="{Binding RelativeSource={RelativeSource AncestorType=kiltse:Iris}, Path=HighlightStrokeThickness}" />
-                    </Trigger>
-                </Style.Triggers>-->
-            </Style>
-        </Path.Style>
-        <!--<Path.Effect>
-            <DropShadowEffect ShadowDepth="0"
-                              Color="{Binding ElementName=Path, Path=Stroke.Color}"
-                              Opacity="1"
-                              BlurRadius="12"
-                              RenderingBias="Quality" />
-        </Path.Effect>-->
+          Effect="{Binding ElementName=ArcControl,
+                           Path=StrokeEffect}"
+          Stroke="{Binding ElementName=ArcControl,
+                           Path=Stroke}"
+          StrokeThickness="{Binding ElementName=ArcControl,
+                                    Path=StrokeThickness}">
         <Path.Data>
             <PathGeometry x:Name="Geometry">
                 <PathGeometry.Figures>
-                    <PathFigure  x:Name="Figure">
+                    <PathFigure x:Name="Figure">
                         <PathFigure.Segments>
                             <ArcSegment x:Name="Segment"
-                                        SweepDirection="{Binding ElementName=ArcControl, Path=Direction, Mode=OneWay}" />
+                                        SweepDirection="{Binding ElementName=ArcControl,
+                                                                 Path=Direction,
+                                                                 Mode=OneWay}" />
                         </PathFigure.Segments>
                     </PathFigure>
                 </PathGeometry.Figures>

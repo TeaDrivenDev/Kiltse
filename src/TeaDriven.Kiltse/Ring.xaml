@@ -1,30 +1,47 @@
 ﻿<UserControl x:Class="TeaDriven.Kiltse.Ring"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:kiltse="clr-namespace:TeaDriven.Kiltse"
-             mc:Ignorable="d"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             Name="RingControl"
+             Width="{Binding RelativeSource={RelativeSource Self},
+                             Path=Radius,
+                             Converter={kiltse:MultiplyValueConverter},
+                             ConverterParameter=2,
+                             Mode=OneWay}"
+             Height="{Binding RelativeSource={RelativeSource Self},
+                              Path=Radius,
+                              Converter={kiltse:MultiplyValueConverter},
+                              ConverterParameter=2,
+                              Mode=OneWay}"
              d:DesignHeight="300"
              d:DesignWidth="300"
-             Width="{Binding RelativeSource={RelativeSource Self}, Path=Radius, Converter={kiltse:MultiplyValueConverter}, ConverterParameter=2, Mode=OneWay}"
-             Height="{Binding RelativeSource={RelativeSource Self}, Path=Radius, Converter={kiltse:MultiplyValueConverter}, ConverterParameter=2, Mode=OneWay}"
-             Name="RingControl">
+             mc:Ignorable="d">
     <Grid HorizontalAlignment="Stretch"
           VerticalAlignment="Stretch">
         <ItemsControl HorizontalAlignment="Stretch"
                       VerticalAlignment="Stretch"
-                      ItemsSource="{Binding ElementName=RingControl, Path=Items}">
+                      ItemsSource="{Binding ElementName=RingControl,
+                                            Path=Items}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <kiltse:Arc Radius="{Binding ElementName=RingControl, Path=Radius}"
+                    <kiltse:Arc Direction="{Binding ElementName=RingControl,
+                                                    Path=Direction,
+                                                    Mode=OneWay}"
                                 ItemIndex="{Binding ItemIndex}"
-                                TotalItems="{Binding TotalItems}"
-                                Direction="{Binding ElementName=RingControl, Path=Direction, Mode=OneWay}"
-                                StartAngle="{Binding ElementName=RingControl, Path=StartAngle, Mode=OneWay}"
-                                MouseLeftButtonUp="Arc_OnMouseLeftButtonUp" />
-                    <!--StrokeThickness="{Binding ElementName=RingControl, Path=StrokeThickness, Mode=OneWay}"
-                                HighlightStrokeThickness="{Binding ElementName=RingControl, Path=HighlightStrokeThickness, Mode=OneWay}" />-->
+                                MouseLeftButtonUp="Arc_OnMouseLeftButtonUp"
+                                Radius="{Binding ElementName=RingControl,
+                                                 Path=Radius}"
+                                StartAngle="{Binding ElementName=RingControl,
+                                                     Path=StartAngle,
+                                                     Mode=OneWay}"
+                                TotalItems="{Binding ElementName=RingControl,
+                                                     Path=Items.Count}" />
+                    <!--
+                        StrokeThickness="{Binding ElementName=RingControl, Path=StrokeThickness, Mode=OneWay}"
+                        HighlightStrokeThickness="{Binding ElementName=RingControl, Path=HighlightStrokeThickness, Mode=OneWay}" />
+                    -->
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
             <ItemsControl.ItemsPanel>
@@ -35,15 +52,18 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
-        <TextBlock Text="{Binding ElementName=RingControl, Path=DisplayName}"
-                   Foreground="White"
-                   Background="Transparent"
-                   FontWeight="Regular"
-                   FontSize="12"
-                   MaxWidth="{Binding ElementName=RingControl, Path=Radius, Converter={kiltse:DisplayNameWidthConverter}}"
-                   TextWrapping="Wrap"
+        <TextBlock MaxWidth="{Binding ElementName=RingControl,
+                                      Path=Radius,
+                                      Converter={kiltse:DisplayNameWidthConverter}}"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
-                   TextAlignment="Center" />
+                   Background="Transparent"
+                   FontSize="12"
+                   FontWeight="Regular"
+                   Foreground="White"
+                   Text="{Binding ElementName=RingControl,
+                                  Path=DisplayName}"
+                   TextAlignment="Center"
+                   TextWrapping="Wrap" />
     </Grid>
 </UserControl>

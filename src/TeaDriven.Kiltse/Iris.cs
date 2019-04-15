@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media;
 
 namespace TeaDriven.Kiltse
@@ -12,139 +11,109 @@ namespace TeaDriven.Kiltse
     {
         static Iris()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(Iris), new FrameworkPropertyMetadata(typeof(Iris)));
+            DefaultStyleKeyProperty.OverrideMetadata(
+                typeof(Iris),
+                new FrameworkPropertyMetadata(typeof(Iris)));
         }
 
         public static readonly DependencyProperty DisplayNameProperty =
-      DependencyProperty.Register("DisplayName", typeof(string), typeof(Iris),
-          new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.AffectsRender));
+            DependencyProperty.Register(
+                nameof(DisplayName),
+                typeof(string),
+                typeof(Iris),
+                new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public static readonly DependencyProperty RadiusProperty =
+            DependencyProperty.Register(
+                nameof(Radius),
+                typeof(double),
+                typeof(Iris),
+                new FrameworkPropertyMetadata(
+                    default(double),
+                    FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public static readonly DependencyProperty StartAngleProperty =
+            DependencyProperty.Register(
+                nameof(StartAngle),
+                typeof(double),
+                typeof(Iris),
+                new PropertyMetadata(90d));
+
+        public static readonly DependencyProperty DirectionProperty =
+            DependencyProperty.Register(
+                nameof(Direction),
+                typeof(SweepDirection),
+                typeof(Iris),
+                new PropertyMetadata(SweepDirection.Clockwise));
+
+        public static readonly DependencyProperty ItemsSourceProperty =
+            DependencyProperty.Register(
+                nameof(ItemsSource),
+                typeof(IEnumerable<object>),
+                typeof(Iris),
+                new PropertyMetadata(Enumerable.Empty<object>(), ItemsChangedCallback));
+
+        public static readonly DependencyProperty StrokeInfoSelectorProperty =
+            DependencyProperty.Register(
+                nameof(StrokeInfoSelector),
+                typeof(StrokeInfoSelector),
+                typeof(Iris),
+                new PropertyMetadata(default(StrokeInfoSelector)));
 
         public string DisplayName
         {
-            get { return (string)GetValue(DisplayNameProperty); }
-            set { SetValue(DisplayNameProperty, value); }
+            get => (string)GetValue(DisplayNameProperty);
+            set => SetValue(DisplayNameProperty, value);
         }
-
-        public static readonly DependencyProperty RadiusProperty =
-            DependencyProperty.Register("Radius", typeof(double), typeof(Iris),
-                new FrameworkPropertyMetadata(default(double),
-                    FrameworkPropertyMetadataOptions.AffectsRender));
 
         public double Radius
         {
-            get { return (double)GetValue(RadiusProperty); }
-            set { SetValue(RadiusProperty, value); }
+            get => (double)GetValue(RadiusProperty);
+            set => SetValue(RadiusProperty, value);
         }
 
-        public static readonly DependencyProperty ItemsSourceProperty =
-            DependencyProperty.Register("ItemsSource", typeof(IEnumerable<object>), typeof(Iris),
-                new PropertyMetadata(new object[] { }, ItemsChangedCallback));
-
-        private static void ItemsChangedCallback(DependencyObject dependencyObject,
-            DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        public double StartAngle
         {
-            var control = dependencyObject as Iris;
+            get => (double)GetValue(StartAngleProperty);
+            set => SetValue(StartAngleProperty, value);
+        }
 
-            if (null != control)
-            {
-                var list =
-                    ((IEnumerable<object>)dependencyPropertyChangedEventArgs.NewValue).ToList();
-                var count = list.Count;
-
-                var ringItems = list.Select((item, index) => new RingItem(index, count, item));
-
-                control._items.Clear();
-                foreach (var item in ringItems)
-                {
-                    control._items.Add(item);
-                }
-            }
+        public SweepDirection Direction
+        {
+            get => (SweepDirection)GetValue(DirectionProperty);
+            set => SetValue(DirectionProperty, value);
         }
 
         public IEnumerable<object> ItemsSource
         {
-            get { return (IEnumerable<object>)GetValue(ItemsSourceProperty); }
-            set { SetValue(ItemsSourceProperty, value); }
+            get => (IEnumerable<object>)GetValue(ItemsSourceProperty);
+            set => SetValue(ItemsSourceProperty, value);
         }
 
-        private readonly ObservableCollection<RingItem> _items =
-            new ObservableCollection<RingItem>();
-
-        public ObservableCollection<RingItem> Items
+        public StrokeInfoSelector StrokeInfoSelector
         {
-            get { return this._items; }
+            get => (StrokeInfoSelector)GetValue(StrokeInfoSelectorProperty);
+            set => SetValue(StrokeInfoSelectorProperty, value);
         }
 
-        public static readonly DependencyProperty DirectionProperty =
-            DependencyProperty.Register("Direction", typeof(SweepDirection), typeof(Iris),
-                new PropertyMetadata(SweepDirection.Clockwise));
+        public ObservableCollection<RingItem> Items { get; } = new ObservableCollection<RingItem>();
 
-        public SweepDirection Direction
+        private static void ItemsChangedCallback(
+            DependencyObject dependencyObject,
+            DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
-            get { return (SweepDirection)GetValue(DirectionProperty); }
-            set { SetValue(DirectionProperty, value); }
-        }
-
-        public static readonly DependencyProperty StartAngleProperty =
-            DependencyProperty.Register("StartAngle", typeof(double), typeof(Iris),
-                new PropertyMetadata(90d));
-
-        public double StartAngle
-        {
-            get { return (double)GetValue(StartAngleProperty); }
-            set { SetValue(StartAngleProperty, value); }
-        }
-
-        public static readonly DependencyProperty StrokeThicknessProperty =
-            DependencyProperty.Register("StrokeThickness", typeof(double), typeof(Iris),
-                new PropertyMetadata(2d));
-
-        public double StrokeThickness
-        {
-            get { return (double)GetValue(StrokeThicknessProperty); }
-            set { SetValue(StrokeThicknessProperty, value); }
-        }
-
-        public static readonly DependencyProperty HighlightStrokeThicknessProperty =
-            DependencyProperty.Register("HighlightStrokeThickness", typeof(double), typeof(Iris),
-                new PropertyMetadata(4d));
-
-        public double HighlightStrokeThickness
-        {
-            get { return (double)GetValue(HighlightStrokeThicknessProperty); }
-            set { SetValue(HighlightStrokeThicknessProperty, value); }
-        }
-
-        public static readonly DependencyProperty StrokeProperty =
-            DependencyProperty.Register("Stroke", typeof(Brush), typeof(Iris),
-                new PropertyMetadata(Brushes.DarkSlateGray));
-
-        public Brush Stroke
-        {
-            get { return (Brush)GetValue(StrokeProperty); }
-            set { SetValue(StrokeProperty, value); }
-        }
-
-        public static RoutedEvent RingSegmentClickEvent =
-            EventManager.RegisterRoutedEvent("RingSegmentClick", RoutingStrategy.Bubble,
-                typeof(RoutedEvent), typeof(Iris));
-
-        public event RoutedEventHandler RingSegmentClick
-        {
-            add { this.AddHandler(RingSegmentClickEvent, value); }
-
-            remove { this.RemoveHandler(RingSegmentClickEvent, value); }
-        }
-
-        public void Arc_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            var arc = sender as Arc;
-
-            if (null != arc)
+            if (dependencyObject is Iris control)
             {
-                var ringItem = (RingItem)arc.DataContext;
+                var list =
+                    ((IEnumerable<object>)dependencyPropertyChangedEventArgs.NewValue).ToList();
 
-                RaiseEvent(new RingSegmentClickEventArgs(RingSegmentClickEvent, ringItem));
+                var ringItems = list.Select((item, index) => new RingItem(index, item));
+
+                control.Items.Clear();
+                foreach (var item in ringItems)
+                {
+                    control.Items.Add(item);
+                }
             }
         }
     }

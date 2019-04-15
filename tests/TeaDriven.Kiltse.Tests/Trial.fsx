@@ -4,9 +4,10 @@
 #r "WindowsBase.dll"
 #r "System.Xaml.dll"
 #r @"..\..\packages\FsEye\lib\net40\FsEye.dll"
-#r @"bin\Debug\TeaDriven.Kiltse.dll"
+#r @"..\..\src\TeaDriven.Kiltse\bin\Debug\TeaDriven.Kiltse.dll"
 
 open System
+open System.Linq
 open System.Threading
 open System.Windows
 open System.Windows.Controls
@@ -15,13 +16,11 @@ open System.Windows.Media
 open TeaDriven.Kiltse
 open System.Windows.Input
 
-
 #load "TestWindow.fsx"
-#load @"..\..\packages\FsEye\content\FsEye.fsx"
+//#load @"..\..\packages\FsEye\content\FsEye.fsx"
 
 open System.Windows.Data
-
-
+open System.Windows.Media.Effects
 
 let window, canvas = TestWindow.window, TestWindow.canvas
 
@@ -91,28 +90,23 @@ let maxSatellites = 30
 let radius = 40.
 
 let random = Random(DateTime.Now.Millisecond)
-    
+
 let getRandomPosition (width, height) =
     let getRandomCoordinate max = (max - 200.) * random.NextDouble() + 100.
 
     getRandomCoordinate width, getRandomCoordinate height
 
-
 let selectName names =
     (random.Next(List.length names - 1))
     |> List.nth names
 
-
-
 let getNumberOfSatellites () =
     if random.Next(7) < 6 then random.Next(1, 9) else random.Next(10, maxSatellites)
-
 
 let defineParameters windowSize =
     let name = selectName names
     let position = getRandomPosition windowSize
     let numberOfSatellites = getNumberOfSatellites()
-
 
     name, position, (fun () -> ()), [0..numberOfSatellites-1]
 
@@ -129,15 +123,9 @@ let createSky numberOfStars =
             ring))
     |> List.iter (canvas.Children.Add >> ignore)
 
+//canvas.Children.Clear()
 
-
-
-canvas.Children.Clear()
-//
-//
-//createSky 5
-
-type FizzbuzzConverter() = 
+type FizzbuzzConverter() =
     interface IValueConverter with
             member x.Convert(value : obj, targetType : Type, parameter : obj, culture : Globalization.CultureInfo) : obj =
                 if null = value then
@@ -148,7 +136,7 @@ type FizzbuzzConverter() =
 
                     match value with
                     | :? string -> Brushes.DarkOrange
-                    | :? RingItem as ringItem -> 
+                    | :? RingItem as ringItem ->
                         match ringItem.ItemIndex with
                         | x when x % 3 = 0 && x % 5 = 0 -> Brushes.Red
                         | x when x % 3 = 0 -> Brushes.GreenYellow
@@ -156,41 +144,60 @@ type FizzbuzzConverter() =
                         | _ -> Brushes.AntiqueWhite
                     :> Brush
                 |> box
-          
-            member x.ConvertBack(value : obj, targetType : Type, parameter : obj, culture : Globalization.CultureInfo) : obj = 
+
+            member x.ConvertBack(value : obj, targetType : Type, parameter : obj, culture : Globalization.CultureInfo) : obj =
                 failwith "Not implemented yet"
 
+type StringFirstLetterStrokeInfoSelector() =
+    inherit StrokeInfoSelector()
 
+    let getEffect (color : Color) =
+        let effect = DropShadowEffect(ShadowDepth = 0., Color = color, Opacity = 1., BlurRadius = 12.)
+        effect.RenderingBias <- RenderingBias.Quality
+        effect
 
+    override __.GetStrokeInfo(value) =
+        let s = string value
 
+        let red = max ((255 - int s.[0]) * 10) 0
 
-let items = names |> Seq.take 15 |> Seq.map box
+        let color = Color.FromRgb(255uy - byte red, byte red, byte red)
 
-let ring = Iris(Radius = 50., DisplayName = "Dings", ItemsSource = items)
-ring.Stroke <- Brushes.Green
-//TestWindow.makeDraggable ring
-Canvas.SetLeft(ring, 200.)
-Canvas.SetTop(ring, 200.)
+        StrokeInfo(SolidColorBrush color, __.DefaultStrokeThickness, getEffect color)
 
-//ring.Radius <- 50.
+let addRing () =
+    let items =
+        [ 1 .. getNumberOfSatellites ()]
+        |> List.map (fun _ -> selectName names)
+        |> List.map box
 
-let binding = Binding(".")
-binding.Converter <- FizzbuzzConverter()
+    let ring = Iris(Radius = 50., DisplayName = "Dings", ItemsSource = items)
+    ring.StrokeInfoSelector <- StringFirstLetterStrokeInfoSelector(DefaultStrokeThickness = 7.)
+    //TestWindow.makeDraggable ring
+    Canvas.SetLeft(ring, 200.)
+    Canvas.SetTop(ring, 200.)
 
-ring.SetBinding(Iris.StrokeProperty, binding)
+    let binding = Binding(".")
+    binding.Converter <- FizzbuzzConverter()
 
+    ring |> canvas.Children.Add
 
-//ring.ItemsSource <- items
-//ring.StrokeThickness <- 8.
-//ring.HighlightStrokeThickness <- 12.
+addRing ()
 
-//ring.ItemsSource <- [0..10] |> List.map box 
-//ring.RingSegmentClick.AddHandler(fun o e ->
-//    let ringItem = (e :?> RingSegmentClickEventArgs).Item
-//    MessageBox.Show(ringItem.Item.ToString()) |> ignore)
+let button = Button(Content = "Refresh")
+button.Click.AddHandler (fun _ _ ->
+    canvas.Children.OfType<Iris>()
+    |> Seq.toList
+    |> List.iter canvas.Children.Remove
 
-ring |> canvas.Children.Add
+    addRing() |> ignore)
 
+canvas.Children.Add button |> ignore
+
+Canvas.SetTop(button, 25.)
+Canvas.SetRight(button, 25.)
+
+//canvas.Children.Clear()
 
 //
 //[0. .. 10. .. 360.]

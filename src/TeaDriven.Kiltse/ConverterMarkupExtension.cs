@@ -5,7 +5,9 @@ using System.Windows.Markup;
 
 namespace TeaDriven.Kiltse
 {
-    public abstract class ConverterMarkupExtension<T> : MarkupExtension, IValueConverter,
+    public abstract class ConverterMarkupExtension<T> :
+        MarkupExtension,
+        IValueConverter,
         IMultiValueConverter
         where T : class, new()
     {
@@ -23,14 +25,12 @@ namespace TeaDriven.Kiltse
 
         #region IValueConverter Members
 
-        public virtual object Convert(object value, Type targetType, object parameter,
-            CultureInfo culture)
+        public virtual object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
 
-        public virtual object ConvertBack(object value, Type targetType,
-            object parameter, CultureInfo culture)
+        public virtual object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
@@ -39,14 +39,12 @@ namespace TeaDriven.Kiltse
 
         #region IMultiValueConverter Members
 
-        public virtual object Convert(object[] values, Type targetType, object parameter,
-            CultureInfo culture)
+        public virtual object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
 
-        public virtual object[] ConvertBack(object value, Type[] targetTypes, object parameter,
-            CultureInfo culture)
+        public virtual object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }

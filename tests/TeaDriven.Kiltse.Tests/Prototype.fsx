@@ -9,7 +9,8 @@ open System.Windows.Media.Effects
 open System.Windows
 
 let window, canvas = TestWindow.window, TestWindow.canvas
-
+window.Width <- 250.
+window.Height <- 250.
 
 
 let uiColor = Colors.AntiqueWhite
@@ -191,10 +192,14 @@ let createStar name radius (x, y) segments =
 
 
 
+let s = createStar "Dings" 50. (100., 100.) [0..12]
+s |> canvas.Children.Add
+
+canvas.Children.Clear()
 
 [1; 7]
 |> List.iter (fun n -> 
-    createStar "Dings" 50. (200., 200.) [0..n-1]
+    createStar "Dings" 50. (100., 100.) [0..n-1]
     |> canvas.Children.Add
     |> ignore)
 

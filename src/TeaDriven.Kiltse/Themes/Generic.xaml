@@ -1,30 +1,66 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:TeaDriven.Kiltse">
+                    xmlns:kiltse="clr-namespace:TeaDriven.Kiltse">
 
-    <Style TargetType="{x:Type local:Iris}">
+    <Style TargetType="{x:Type kiltse:Iris}">
         <Setter Property="Height"
-                Value="{Binding RelativeSource={RelativeSource Self}, Path=Radius, Converter={local:MultiplyValueConverter}, ConverterParameter=2, Mode=OneWay}" />
+                Value="{Binding RelativeSource={RelativeSource Self},
+                                Path=Radius,
+                                Converter={kiltse:MultiplyValueConverter},
+                                ConverterParameter=2,
+                                Mode=OneWay}" />
         <Setter Property="Width"
-                Value="{Binding RelativeSource={RelativeSource Self}, Path=Radius, Converter={local:MultiplyValueConverter}, ConverterParameter=2, Mode=OneWay}" />
+                Value="{Binding RelativeSource={RelativeSource Self},
+                                Path=Radius,
+                                Converter={kiltse:MultiplyValueConverter},
+                                ConverterParameter=2,
+                                Mode=OneWay}" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:Iris}">
+                <ControlTemplate TargetType="{x:Type kiltse:Iris}">
                     <Grid HorizontalAlignment="Stretch"
                           VerticalAlignment="Stretch">
                         <ItemsControl HorizontalAlignment="Stretch"
                                       VerticalAlignment="Stretch"
-                                      ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Items}">
+                                      ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent},
+                                                            Path=Items}">
+
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <local:Arc Radius="{Binding RelativeSource={RelativeSource AncestorType=local:Iris}, Path=Radius}"
-                                               ItemIndex="{Binding ItemIndex}"
-                                               TotalItems="{Binding TotalItems}"
-                                               Direction="{Binding RelativeSource={RelativeSource TemplatedParent}, Path= Direction}"
-                                               StartAngle="{Binding RelativeSource={RelativeSource TemplatedParent}, Path= StartAngle}"
-                                               Stroke="{Binding RelativeSource={RelativeSource AncestorType=local:Iris}, Path=Stroke}" />
-                                    <!--StrokeThickness="{Binding ElementName=RingControl, Path=StrokeThickness, Mode=OneWay}"
-                                HighlightStrokeThickness="{Binding ElementName=RingControl, Path=HighlightStrokeThickness, Mode=OneWay}" />-->
+                                    <kiltse:Arc Direction="{Binding RelativeSource={RelativeSource TemplatedParent},
+                                                                    Path=Direction}"
+                                                ItemIndex="{Binding ItemIndex}"
+                                                Radius="{Binding RelativeSource={RelativeSource AncestorType=kiltse:Iris},
+                                                                 Path=Radius}"
+                                                StartAngle="{Binding RelativeSource={RelativeSource AncestorType=kiltse:Iris},
+                                                                     Path=StartAngle}"
+                                                TotalItems="{Binding RelativeSource={RelativeSource AncestorType=kiltse:Iris},
+                                                                     Path=Items.Count}">
+                                        <kiltse:Arc.Stroke>
+                                            <MultiBinding Converter="{kiltse:StrokeInfoBrushConverter}">
+                                                <Binding Path="Item" />
+                                                <Binding Path="StrokeInfoSelector"
+                                                         RelativeSource="{RelativeSource AncestorType=kiltse:Iris}" />
+                                            </MultiBinding>
+                                        </kiltse:Arc.Stroke>
+                                        <kiltse:Arc.StrokeThickness>
+                                            <MultiBinding Converter="{kiltse:StrokeInfoThicknessConverter}">
+                                                <Binding Path="Item" />
+                                                <Binding Path="StrokeInfoSelector"
+                                                         RelativeSource="{RelativeSource AncestorType=kiltse:Iris}" />
+                                            </MultiBinding>
+                                        </kiltse:Arc.StrokeThickness>
+                                        <kiltse:Arc.StrokeEffect>
+                                            <MultiBinding Converter="{kiltse:StrokeInfoEffectConverter}">
+                                                <Binding Path="Item" />
+                                                <Binding Path="StrokeInfoSelector"
+                                                         RelativeSource="{RelativeSource AncestorType=kiltse:Iris}" />
+                                            </MultiBinding>
+                                        </kiltse:Arc.StrokeEffect>
+                                        <kiltse:Arc.ToolTip>
+                                            <TextBlock Text="{Binding Name}" />
+                                        </kiltse:Arc.ToolTip>
+                                    </kiltse:Arc>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                             <ItemsControl.ItemsPanel>
@@ -35,16 +71,19 @@
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                         </ItemsControl>
-                        <TextBlock Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DisplayName}"
-                                   Foreground="White"
-                                   Background="Transparent"
-                                   FontWeight="Regular"
-                                   FontSize="12"
-                                   MaxWidth="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Radius, Converter={local:DisplayNameWidthConverter}}"
-                                   TextWrapping="Wrap"
+                        <TextBlock MaxWidth="{Binding RelativeSource={RelativeSource TemplatedParent},
+                                                      Path=Radius,
+                                                      Converter={kiltse:DisplayNameWidthConverter}}"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
-                                   TextAlignment="Center" />
+                                   Background="Transparent"
+                                   FontSize="12"
+                                   FontWeight="Regular"
+                                   Foreground="White"
+                                   Text="{Binding RelativeSource={RelativeSource TemplatedParent},
+                                                  Path=DisplayName}"
+                                   TextAlignment="Center"
+                                   TextWrapping="Wrap" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

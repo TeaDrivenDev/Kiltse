@@ -24,8 +24,8 @@ namespace TeaDriven.Kiltse
 
         public string DisplayName
         {
-            get { return (string)GetValue(DisplayNameProperty); }
-            set { SetValue(DisplayNameProperty, value); }
+            get => (string)GetValue(DisplayNameProperty);
+            set => SetValue(DisplayNameProperty, value);
         }
 
         public static readonly DependencyProperty RadiusProperty =
@@ -35,8 +35,8 @@ namespace TeaDriven.Kiltse
 
         public double Radius
         {
-            get { return (double)GetValue(RadiusProperty); }
-            set { SetValue(RadiusProperty, value); }
+            get => (double)GetValue(RadiusProperty);
+            set => SetValue(RadiusProperty, value);
         }
 
         public static readonly DependencyProperty ItemsSourceProperty =
@@ -46,15 +46,12 @@ namespace TeaDriven.Kiltse
         private static void ItemsChangedCallback(DependencyObject dependencyObject,
             DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
-            var control = dependencyObject as Ring;
-
-            if (null != control)
+            if (dependencyObject is Ring control)
             {
                 var list =
                     ((IEnumerable<object>)dependencyPropertyChangedEventArgs.NewValue).ToList();
-                var count = list.Count;
 
-                var ringItems = list.Select((item, index) => new RingItem(index, count, item));
+                var ringItems = list.Select((item, index) => new RingItem(index, item));
 
                 control._items.Clear();
                 foreach (var item in ringItems)
@@ -66,17 +63,14 @@ namespace TeaDriven.Kiltse
 
         public IEnumerable<object> ItemsSource
         {
-            get { return (IEnumerable<object>)GetValue(ItemsSourceProperty); }
-            set { SetValue(ItemsSourceProperty, value); }
+            get => (IEnumerable<object>)GetValue(ItemsSourceProperty);
+            set => SetValue(ItemsSourceProperty, value);
         }
 
         private readonly ObservableCollection<RingItem> _items =
             new ObservableCollection<RingItem>();
 
-        public ObservableCollection<RingItem> Items
-        {
-            get { return this._items; }
-        }
+        public ObservableCollection<RingItem> Items => this._items;
 
         public static readonly DependencyProperty DirectionProperty =
             DependencyProperty.Register("Direction", typeof(SweepDirection), typeof(Ring),
@@ -84,8 +78,8 @@ namespace TeaDriven.Kiltse
 
         public SweepDirection Direction
         {
-            get { return (SweepDirection)GetValue(DirectionProperty); }
-            set { SetValue(DirectionProperty, value); }
+            get => (SweepDirection)GetValue(DirectionProperty);
+            set => SetValue(DirectionProperty, value);
         }
 
         public static readonly DependencyProperty StartAngleProperty =
@@ -94,8 +88,8 @@ namespace TeaDriven.Kiltse
 
         public double StartAngle
         {
-            get { return (double)GetValue(StartAngleProperty); }
-            set { SetValue(StartAngleProperty, value); }
+            get => (double)GetValue(StartAngleProperty);
+            set => SetValue(StartAngleProperty, value);
         }
 
         public static readonly DependencyProperty StrokeThicknessProperty =
@@ -104,8 +98,8 @@ namespace TeaDriven.Kiltse
 
         public double StrokeThickness
         {
-            get { return (double)GetValue(StrokeThicknessProperty); }
-            set { SetValue(StrokeThicknessProperty, value); }
+            get => (double)GetValue(StrokeThicknessProperty);
+            set => SetValue(StrokeThicknessProperty, value);
         }
 
         public static readonly DependencyProperty HighlightStrokeThicknessProperty =
@@ -114,8 +108,8 @@ namespace TeaDriven.Kiltse
 
         public double HighlightStrokeThickness
         {
-            get { return (double)GetValue(HighlightStrokeThicknessProperty); }
-            set { SetValue(HighlightStrokeThicknessProperty, value); }
+            get => (double)GetValue(HighlightStrokeThicknessProperty);
+            set => SetValue(HighlightStrokeThicknessProperty, value);
         }
 
         public static RoutedEvent RingSegmentClickEvent =
@@ -124,16 +118,14 @@ namespace TeaDriven.Kiltse
 
         public event RoutedEventHandler RingSegmentClick
         {
-            add { this.AddHandler(RingSegmentClickEvent, value); }
+            add => this.AddHandler(RingSegmentClickEvent, value);
 
-            remove { this.RemoveHandler(RingSegmentClickEvent, value); }
+            remove => this.RemoveHandler(RingSegmentClickEvent, value);
         }
 
         private void Arc_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            var arc = sender as Arc;
-
-            if (null != arc)
+            if (sender is Arc arc)
             {
                 var ringItem = (RingItem)arc.DataContext;
 
@@ -144,16 +136,15 @@ namespace TeaDriven.Kiltse
 
     public class RingItem
     {
-        public int ItemIndex { get; private set; }
+        public int ItemIndex { get; }
 
-        public int TotalItems { get; private set; }
+        public object Item { get; }
 
-        public object Item { get; private set; }
+        public string Name => this.Item.ToString();
 
-        public RingItem(int itemIndex, int totalItems, object item)
+        public RingItem(int itemIndex, object item)
         {
             ItemIndex = itemIndex;
-            TotalItems = totalItems;
             Item = item;
         }
     }
