@@ -50,7 +50,7 @@ namespace TeaDriven.Kiltse
         {
             var sign = (SweepDirection.Clockwise == direction ? -1 : 1);
 
-            return startAngle + (sign * angle);
+            return (startAngle + sign * angle) % 360;
         }
     }
 }

@@ -18,14 +18,15 @@ namespace TeaDriven.Kiltse
                 typeof(Arc),
                 new FrameworkPropertyMetadata(
                     default(double),
-                    FrameworkPropertyMetadataOptions.AffectsRender, PropertyChangedCallback));
+                    FrameworkPropertyMetadataOptions.AffectsRender,
+                    PropertyChangedCallback));
 
         public static readonly DependencyProperty GapWidthProperty =
             DependencyProperty.Register(
                 nameof(GapWidth),
                 typeof(double),
                 typeof(Arc),
-                new PropertyMetadata(Constants.DefaultGapWidth));
+                new PropertyMetadata(Constants.DefaultGapWidth, PropertyChangedCallback));
 
         public static readonly DependencyProperty StartAngleProperty =
             DependencyProperty.Register(
@@ -44,7 +45,9 @@ namespace TeaDriven.Kiltse
                 typeof(Arc),
                 new FrameworkPropertyMetadata(
                     SweepDirection.Clockwise,
-                    FrameworkPropertyMetadataOptions.AffectsRender, PropertyChangedCallback));
+                    FrameworkPropertyMetadataOptions.AffectsRender,
+                    PropertyChangedCallback,
+                    CoerceValueCallback));
 
         public static DependencyProperty ItemIndexProperty =
             DependencyProperty.Register(
@@ -53,7 +56,8 @@ namespace TeaDriven.Kiltse
                 typeof(Arc),
                 new FrameworkPropertyMetadata(
                     default(int),
-                    FrameworkPropertyMetadataOptions.AffectsRender, PropertyChangedCallback));
+                    FrameworkPropertyMetadataOptions.AffectsRender,
+                    PropertyChangedCallback));
 
         public static DependencyProperty TotalItemsProperty =
             DependencyProperty.Register(
@@ -79,7 +83,9 @@ namespace TeaDriven.Kiltse
                 nameof(StrokeThickness),
                 typeof(double),
                 typeof(Arc),
-                new FrameworkPropertyMetadata(2d, FrameworkPropertyMetadataOptions.AffectsRender));
+                new FrameworkPropertyMetadata(
+                    Constants.DefaultStrokeThickness,
+                    FrameworkPropertyMetadataOptions.AffectsRender));
 
         public static readonly DependencyProperty StrokeEffectProperty =
             DependencyProperty.Register(
@@ -150,6 +156,16 @@ namespace TeaDriven.Kiltse
             {
                 control.Recalculate();
             }
+        }
+
+        private static object CoerceValueCallback(DependencyObject d, object basevalue)
+        {
+            if (d is Arc control)
+            {
+                control.Recalculate();
+            }
+
+            return basevalue;
         }
 
         private void Recalculate()
