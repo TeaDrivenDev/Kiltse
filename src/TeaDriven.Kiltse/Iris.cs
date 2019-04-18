@@ -7,8 +7,11 @@ using System.Windows.Media;
 
 namespace TeaDriven.Kiltse
 {
+    [TemplatePart(Name = PART_DisplayName, Type = typeof(TextBlock))]
     public class Iris : ContentControl
     {
+        public const string PART_DisplayName = "PART_DisplayName";
+
         static Iris()
         {
             DefaultStyleKeyProperty.OverrideMetadata(
@@ -110,6 +113,11 @@ namespace TeaDriven.Kiltse
         }
 
         public ObservableCollection<RingItem> Items { get; } = new ObservableCollection<RingItem>();
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+        }
 
         private static void ItemsChangedCallback(
             DependencyObject dependencyObject,

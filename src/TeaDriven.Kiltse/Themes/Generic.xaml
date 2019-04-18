@@ -68,7 +68,9 @@
                                             </MultiBinding>
                                         </kiltse:Arc.StrokeEffect>
                                         <kiltse:Arc.ToolTip>
-                                            <TextBlock Text="{Binding Name}" />
+                                            <ToolTip>
+                                                <TextBlock Text="{Binding Name}" />
+                                            </ToolTip>
                                         </kiltse:Arc.ToolTip>
                                     </kiltse:Arc>
                                 </DataTemplate>
@@ -80,7 +82,8 @@
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                         </ItemsControl>
-                        <TextBlock MaxWidth="{Binding RelativeSource={RelativeSource TemplatedParent},
+                        <TextBlock x:Name="PART_DisplayName"
+                                   MaxWidth="{Binding RelativeSource={RelativeSource TemplatedParent},
                                                       Path=Radius,
                                                       Converter={kiltse:DisplayNameWidthConverter}}"
                                    HorizontalAlignment="Center"
