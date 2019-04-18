@@ -1,4 +1,5 @@
 source https://nuget.org/api/v2
+framework: net452
 
 nuget FSharp.Formatting
 nuget FAKE

@@ -1,25 +1,26 @@
+RESTRICTION: == net452
 NUGET
-  remote: https://nuget.org/api/v2
-  specs:
-    FAKE (3.18.0)
-    FsEye (2.1.0)
-    FSharp.Compiler.Service (0.0.86)
-    FSharp.Formatting (2.7.4)
-      FSharp.Compiler.Service (>= 0.0.82)
-      FSharpVSPowerTools.Core (>= 1.7.0)
-    FSharpVSPowerTools.Core (1.7.0)
-      FSharp.Compiler.Service (>= 0.0.81)
-    Microsoft.Bcl (1.1.10)
-      Microsoft.Bcl.Build (>= 1.0.14)
-    Microsoft.Bcl.Build (1.0.21)
-    Microsoft.Net.Http (2.2.29)
-      Microsoft.Bcl (>= 1.1.10)
-      Microsoft.Bcl.Build (>= 1.0.14)
-    Octokit (0.7.2)
-      Microsoft.Net.Http
-    SourceLink.Fake (0.4.2)
+  remote: https://www.nuget.org/api/v2
+    FAKE (5.8.4)
+    FsEye (2.1)
+    FSharp.Compiler.Service (27.0.1)
+      FSharp.Core (>= 4.5.2)
+      System.Collections.Immutable (>= 1.5)
+      System.Reflection.Metadata (>= 1.6)
+      System.ValueTuple (>= 4.4)
+    FSharp.Core (4.6.2)
+    FSharp.Formatting (3.1)
+      FSharp.Compiler.Service (>= 27.0.1 < 28.0)
+      Microsoft.AspNet.Razor (>= 3.2.7 < 4.0)
+      System.ValueTuple (>= 4.5 < 5.0)
+    Microsoft.AspNet.Razor (3.2.7)
+    Octokit (0.32)
+    SourceLink.Fake (1.1)
+    System.Collections.Immutable (1.5)
+    System.Reflection.Metadata (1.6)
+      System.Collections.Immutable (>= 1.5)
+    System.ValueTuple (4.5)
 GITHUB
   remote: fsharp/FAKE
-  specs:
-    modules/Octokit/Octokit.fsx (be06e4f882a468bc4a81960e0689649c67f71068)
-      Octokit
+    modules/Octokit/Octokit.fsx (d6d1408553b3702ddfb0de3e1f0ee8c2b83aa2dc)
+      Octokit (>= 0.20)
