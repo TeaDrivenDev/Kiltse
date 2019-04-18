@@ -166,20 +166,19 @@ type StringFirstLetterStrokeInfoSelector() =
         StrokeInfo(SolidColorBrush color, __.DefaultStrokeThickness, getEffect color)
 
 let addRing () =
+    let count = getNumberOfSatellites ()
+
     let items =
-        [ 1 .. getNumberOfSatellites ()]
+        [ 1 .. count ]
         |> List.map (fun _ -> selectName names)
         |> List.map box
 
-    let ring = Iris(Radius = 50., DisplayName = "Dings", ItemsSource = items)
-    ring.StrokeInfoSelector <- StringFirstLetterStrokeInfoSelector(DefaultStrokeThickness = 7.)
+    let ring = Iris(Radius = 35., DisplayName = sprintf "Dings %i" count, ItemsSource = items, GapWidth = 3.)
+    ring.StrokeInfoSelector <- StringFirstLetterStrokeInfoSelector(DefaultStrokeThickness = 3.)
     ring.Direction <- SweepDirection.Clockwise
     TestWindow.makeDraggable ring
     Canvas.SetLeft(ring, 200.)
     Canvas.SetTop(ring, 200.)
-
-    let binding = Binding(".")
-    binding.Converter <- FizzbuzzConverter()
 
     ring |> canvas.Children.Add
 

@@ -6,4 +6,6 @@ nuget FAKE
 nuget SourceLink.Fake
 nuget fseye
 
+github TeaDrivenDev/TeaDriven.NightSky
+
 github fsharp/FAKE modules/Octokit/Octokit.fsx

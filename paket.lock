@@ -21,6 +21,8 @@ NUGET
       System.Collections.Immutable (>= 1.5)
     System.ValueTuple (4.5)
 GITHUB
+  remote: TeaDrivenDev/TeaDriven.NightSky
+    FULLPROJECT (764a1ec4a04600daab1957dcf6a1296905176491)
   remote: fsharp/FAKE
     modules/Octokit/Octokit.fsx (d6d1408553b3702ddfb0de3e1f0ee8c2b83aa2dc)
       Octokit (>= 0.20)
