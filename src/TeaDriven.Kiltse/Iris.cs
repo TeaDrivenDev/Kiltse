@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -10,6 +11,8 @@ namespace TeaDriven.Kiltse
     [TemplatePart(Name = PART_DisplayName, Type = typeof(TextBlock))]
     public class Iris : ContentControl
     {
+        private ContentControl displayNameContentControl;
+
         public const string PART_DisplayName = "PART_DisplayName";
 
         static Iris()
@@ -70,6 +73,13 @@ namespace TeaDriven.Kiltse
                 typeof(Iris),
                 new PropertyMetadata(new DefaultStrokeInfoSelector()));
 
+        public static readonly DependencyProperty DisplayNameTemplateProperty =
+            DependencyProperty.Register(
+                nameof(DisplayNameTemplate),
+                typeof(ControlTemplate),
+                typeof(Iris),
+                new PropertyMetadata(default(ControlTemplate)));
+
         public string DisplayName
         {
             get => (string)GetValue(DisplayNameProperty);
@@ -112,11 +122,36 @@ namespace TeaDriven.Kiltse
             set => SetValue(StrokeInfoSelectorProperty, value);
         }
 
+        public ControlTemplate DisplayNameTemplate
+        {
+            get => (ControlTemplate)GetValue(DisplayNameTemplateProperty);
+            set => SetValue(DisplayNameTemplateProperty, value);
+        }
+
+        public double DisplayNameAreaSize => Math.Sqrt(2 * this.Radius * this.Radius);
+
         public ObservableCollection<RingItem> Items { get; } = new ObservableCollection<RingItem>();
 
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
+
+            var displayNameControl =
+                this.displayNameContentControl
+                ?? (this.displayNameContentControl =
+                    GetTemplateChild(PART_DisplayName) as ContentControl);
+
+            if (null != displayNameControl)
+            {
+                if (null != this.DisplayNameTemplate)
+                {
+                    displayNameControl.Template = this.DisplayNameTemplate;
+                }
+                else
+                {
+                    this.DisplayNameTemplate = displayNameControl.Template;
+                }
+            }
         }
 
         private static void ItemsChangedCallback(

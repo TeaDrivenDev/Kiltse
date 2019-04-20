@@ -2,6 +2,22 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:kiltse="clr-namespace:TeaDriven.Kiltse">
 
+    <ControlTemplate x:Key="DefaultDisplayNameTemplate">
+        <TextBlock MaxWidth="{Binding RelativeSource={RelativeSource TemplatedParent},
+                                      Path=Radius,
+                                      Converter={kiltse:DisplayNameWidthConverter}}"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Background="Transparent"
+                   FontSize="12"
+                   FontWeight="Regular"
+                   Foreground="White"
+                   Text="{Binding RelativeSource={RelativeSource AncestorType=kiltse:Iris},
+                                  Path=DisplayName}"
+                   TextAlignment="Center"
+                   TextWrapping="Wrap" />
+    </ControlTemplate>
+
     <Style TargetType="{x:Type kiltse:Iris}">
         <Setter Property="Height"
                 Value="{Binding RelativeSource={RelativeSource Self},
@@ -82,20 +98,12 @@
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                         </ItemsControl>
-                        <TextBlock x:Name="PART_DisplayName"
-                                   MaxWidth="{Binding RelativeSource={RelativeSource TemplatedParent},
-                                                      Path=Radius,
-                                                      Converter={kiltse:DisplayNameWidthConverter}}"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   Background="Transparent"
-                                   FontSize="12"
-                                   FontWeight="Regular"
-                                   Foreground="White"
-                                   Text="{Binding RelativeSource={RelativeSource TemplatedParent},
-                                                  Path=DisplayName}"
-                                   TextAlignment="Center"
-                                   TextWrapping="Wrap" />
+                        <ContentControl x:Name="PART_DisplayName"
+                                        MaxWidth="{Binding RelativeSource={RelativeSource AncestorType=kiltse:Iris},
+                                                           Path=DisplayNameAreaSize}"
+                                        MaxHeight="{Binding RelativeSource={RelativeSource AncestorType=kiltse:Iris},
+                                                            Path=DisplayNameAreaSize}"
+                                        Template="{StaticResource DefaultDisplayNameTemplate}" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
