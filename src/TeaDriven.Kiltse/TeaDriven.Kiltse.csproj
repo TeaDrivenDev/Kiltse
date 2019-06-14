@@ -57,12 +57,17 @@
     <Compile Include="Iris.cs" />
     <Compile Include="RingItem.cs" />
     <Compile Include="RingSegmentClickEventArgs.cs" />
+    <Compile Include="SharedResources.cs" />
     <Compile Include="StrokeInfo.cs" />
     <Compile Include="StrokeInfoBrushConverter.cs" />
     <Compile Include="StrokeInfoEffectConverter.cs" />
     <Compile Include="StrokeInfoSelector.cs" />
     <Compile Include="StrokeInfoThicknessConverter.cs" />
     <Page Include="Arc.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DefaultTemplates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

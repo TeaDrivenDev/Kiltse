@@ -2,8 +2,14 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:kiltse="clr-namespace:TeaDriven.Kiltse">
 
+    <ControlTemplate x:Key="{x:Static kiltse:SharedResources.DefaultRingSegmentToolTipTemplateKey}">
+        <TextBlock Background="Red"
+                   Foreground="White"
+                   Text="{Binding Name}" />
+    </ControlTemplate>
+
     <ControlTemplate x:Key="DefaultDisplayNameTemplate">
-        <TextBlock MaxWidth="{Binding RelativeSource={RelativeSource TemplatedParent},
+        <TextBlock MaxWidth="{Binding RelativeSource={RelativeSource AncestorType=kiltse:Iris},
                                       Path=Radius,
                                       Converter={kiltse:DisplayNameWidthConverter}}"
                    HorizontalAlignment="Center"
@@ -62,6 +68,11 @@
                                                                      Path=StartAngle}"
                                                 TotalItems="{Binding RelativeSource={RelativeSource AncestorType=kiltse:Iris},
                                                                      Path=Items.Count}">
+                                        <kiltse:Arc.Resources>
+                                            <kiltse:BindingProxy x:Key="Iris"
+                                                                 Data="{Binding RelativeSource={RelativeSource AncestorType=kiltse:Iris},
+                                                                                Path=.}" />
+                                        </kiltse:Arc.Resources>
                                         <kiltse:Arc.Stroke>
                                             <MultiBinding Converter="{kiltse:StrokeInfoBrushConverter}">
                                                 <Binding />
@@ -84,9 +95,11 @@
                                             </MultiBinding>
                                         </kiltse:Arc.StrokeEffect>
                                         <kiltse:Arc.ToolTip>
-                                            <ToolTip>
-                                                <TextBlock Text="{Binding Name}" />
-                                            </ToolTip>
+                                            <ToolTip DataContext="{Binding Source={StaticResource Iris},
+                                                                           Path=Data}"
+                                                     Template="{Binding RelativeSource={RelativeSource Self},
+                                                                        Path=DataContext.RingSegmentToolTipTemplate}" />
+                                            <!--<ToolTip Template="{DynamicResource kiltse:SharedResources.DefaultRingSegmentToolTipTemplateKey}" />-->
                                         </kiltse:Arc.ToolTip>
                                     </kiltse:Arc>
                                 </DataTemplate>

@@ -1,0 +1,23 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:TeaDriven.Kiltse">
+    <DataTemplate x:Key="DefaultToolTipTemplate">
+        <TextBlock Text="{Binding Name}" />
+    </DataTemplate>
+
+    <DataTemplate x:Key="DefaultDisplayNameTemplate">
+        <TextBlock MaxWidth="{Binding RelativeSource={RelativeSource TemplatedParent},
+                                      Path=Radius,
+                                      Converter={local:DisplayNameWidthConverter}}"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Background="Transparent"
+                   FontSize="12"
+                   FontWeight="Regular"
+                   Foreground="White"
+                   Text="{Binding RelativeSource={RelativeSource TemplatedParent},
+                                  Path=DisplayName}"
+                   TextAlignment="Center"
+                   TextWrapping="Wrap" />
+    </DataTemplate>
+</ResourceDictionary>

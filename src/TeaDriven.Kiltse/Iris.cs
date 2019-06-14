@@ -4,10 +4,21 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Media;
 
 namespace TeaDriven.Kiltse
 {
+    public class XCustomControl : ContentControl
+    {
+        static XCustomControl()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(
+                typeof(XCustomControl),
+                new FrameworkPropertyMetadata(typeof(XCustomControl)));
+        }
+    }
+
     [TemplatePart(Name = PART_DisplayName, Type = typeof(TextBlock))]
     public class Iris : ContentControl
     {
@@ -80,6 +91,13 @@ namespace TeaDriven.Kiltse
                 typeof(Iris),
                 new PropertyMetadata(default(ControlTemplate)));
 
+        public static readonly DependencyProperty RingSegmentToolTipTemplateProperty =
+            DependencyProperty.Register(
+                nameof(RingSegmentToolTipTemplate),
+                typeof(ControlTemplate),
+                typeof(Iris),
+                new PropertyMetadata(default(ControlTemplate)));
+
         public string DisplayName
         {
             get => (string)GetValue(DisplayNameProperty);
@@ -128,6 +146,12 @@ namespace TeaDriven.Kiltse
             set => SetValue(DisplayNameTemplateProperty, value);
         }
 
+        public ControlTemplate RingSegmentToolTipTemplate
+        {
+            get => (ControlTemplate)GetValue(RingSegmentToolTipTemplateProperty);
+            set => SetValue(RingSegmentToolTipTemplateProperty, value);
+        }
+
         public double DisplayNameAreaSize => Math.Sqrt(2 * this.Radius * this.Radius);
 
         public ObservableCollection<RingItem> Items { get; } = new ObservableCollection<RingItem>();
@@ -152,6 +176,12 @@ namespace TeaDriven.Kiltse
                     this.DisplayNameTemplate = displayNameControl.Template;
                 }
             }
+
+            if (null == this.RingSegmentToolTipTemplate)
+            {
+                this.RingSegmentToolTipTemplate =
+                    TryFindResource(SharedResources.DefaultRingSegmentToolTipTemplateKey) as ControlTemplate;
+            }
         }
 
         private static void ItemsChangedCallback(
@@ -172,5 +202,61 @@ namespace TeaDriven.Kiltse
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// http://www.thomaslevesque.com/2011/03/21/wpf-how-to-bind-to-data-when-the-datacontext-is-not-inherited/
+    /// Hilfsklasse, zum Binden in der GUI. Controls können diesen Proxy als Quelle angeben und so
+    /// auf Daten zugreifen, auch wenn sie selbst keinen DataContext haben (DataGridcColumn).
+    /// </summary>
+    public class BindingProxy : Freezable
+    {
+        // Using a DependencyProperty as the backing store for Data.  This enables animation, styling, binding, etc...
+
+        #region Static Fields
+
+        public static readonly DependencyProperty DataProperty = DependencyProperty.Register(
+            "Data",
+            typeof(object),
+            typeof(BindingProxy),
+            new UIPropertyMetadata(null));
+
+        #endregion Static Fields
+
+        #region Public Properties
+
+        public object Data
+        {
+            get
+            {
+                return this.GetValue(DataProperty);
+            }
+
+            set
+            {
+                this.SetValue(DataProperty, value);
+            }
+        }
+
+        #endregion Public Properties
+
+        #region Methods
+
+        /// <summary>
+        /// Workaround: After a task movement RowData.Row of the moved tasks does not refresh. (#7048)
+        /// We have to call this in every case, where content of RowData.Row could have changed and the grid is not fully reloaded.
+        /// Even a refresh of the source list (e.g. in the described case 'WorkplaceViewModel.Tasks') does not refresh the RowData.Row.
+        /// </summary>
+        public void RefreshFromSource()
+        {
+            BindingOperations.GetBindingExpression(this, DataProperty)?.UpdateTarget();
+        }
+
+        protected override Freezable CreateInstanceCore()
+        {
+            return new BindingProxy();
+        }
+
+        #endregion Methods
     }
 }

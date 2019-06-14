@@ -19,7 +19,22 @@
                 <DataTemplate>
                     <kiltse:Iris DisplayName="{Binding Name}"
                                  ItemsSource="{Binding SubItems}"
-                                 Radius="50" />
+                                 Radius="50">
+                        <!--<kiltse:Iris.DisplayNameTemplate>
+                            <ControlTemplate>
+                                <TextBlock Background="Red"
+                                           Text="{Binding RelativeSource={RelativeSource AncestorType=kiltse:Iris},
+                                                          Path=DisplayName}" />
+                            </ControlTemplate>
+                        </kiltse:Iris.DisplayNameTemplate>-->
+                        <kiltse:Iris.RingSegmentToolTipTemplate>
+                            <ControlTemplate>
+                                <TextBlock Background="GreenYellow"
+                                           Foreground="Black"
+                                           Text="{Binding Name}" />
+                            </ControlTemplate>
+                        </kiltse:Iris.RingSegmentToolTipTemplate>
+                    </kiltse:Iris>
                 </DataTemplate>
             </nightSky:CanvasItemsControl.ItemTemplate>
         </nightSky:CanvasItemsControl>
